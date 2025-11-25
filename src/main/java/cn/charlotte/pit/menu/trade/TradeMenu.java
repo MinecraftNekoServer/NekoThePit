@@ -70,9 +70,9 @@ public class TradeMenu extends Menu {
             int amount;
             if (myselfCoins >= 1000) {
                 material = Material.GOLD_INGOT;
-                amount = new Double((myselfCoins - (myselfCoins % 1000)) / 1000).intValue();
+                amount = Double.valueOf((myselfCoins - (myselfCoins % 1000)) / 1000).intValue();
             } else {
-                amount = Math.max(1, new Double((myselfCoins - (myselfCoins % 100)) / 100).intValue());
+                amount = Math.max(1, Double.valueOf((myselfCoins - (myselfCoins % 100)) / 100).intValue());
             }
             buttonMap.put(0, new CoinDisplayButton(new ItemBuilder(material).name("&6" + StringUtil.getFormatLong((long) myselfCoins) + "硬币").amount(amount).shiny().build(), true, tradeManager, true));
         }
@@ -84,9 +84,9 @@ public class TradeMenu extends Menu {
             int amount;
             if (targetCoins >= 1000) {
                 material = Material.GOLD_INGOT;
-                amount = new Double((targetCoins - (targetCoins % 1000)) / 1000).intValue();
+                amount = Double.valueOf((targetCoins - (targetCoins % 1000)) / 1000).intValue();
             } else {
-                amount = Math.max(1, new Double((targetCoins - (targetCoins % 100)) / 100).intValue());
+                amount = Math.max(1, Double.valueOf((targetCoins - (targetCoins % 100)) / 100).intValue());
             }
             buttonMap.put(5, new CoinDisplayButton(new ItemBuilder(material).name("&6" + StringUtil.getFormatLong((long) targetCoins) + "硬币").amount(amount).shiny().build(), true, tradeManager, false));
         }

@@ -9,7 +9,7 @@ import cn.charlotte.pit.enchantment.type.JSEnchantment
 import cn.charlotte.pit.enchantmentInt
 import cn.charlotte.pit.util.chat.CC
 import jdk.dynalink.beans.StaticClass
-import jdk.nashorn.api.scripting.ScriptObjectMirror
+import org.openjdk.nashorn.api.scripting.ScriptObjectMirror
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.io.File
@@ -23,10 +23,10 @@ object JSHandler {
 
     private val scriptEngineFactory by lazy {
         try {
-            Class.forName("jdk.nashorn.api.scripting.NashornScriptEngineFactory").getDeclaredConstructor()
+            Class.forName("org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory").getDeclaredConstructor()
                 .newInstance() as ScriptEngineFactory
         } catch (ex: ClassNotFoundException) {
-            jdk.nashorn.api.scripting.NashornScriptEngineFactory()
+            org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory()
         }
     }
 

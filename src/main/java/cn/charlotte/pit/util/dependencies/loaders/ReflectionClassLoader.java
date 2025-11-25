@@ -34,14 +34,35 @@ import java.nio.file.Path;
 
 public class ReflectionClassLoader implements PluginClassLoader {
     private static final Method ADD_URL_METHOD;
+    private static final boolean ACCESS_AVAILABLE;
 
     static {
+        Method method = null;
+        boolean accessAvailable = false;
+        
         try {
-            ADD_URL_METHOD = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
-            ADD_URL_METHOD.setAccessible(true);
+            method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
+            try {
+                method.setAccessible(true);
+                accessAvailable = true;
+            } catch (java.lang.reflect.InaccessibleObjectException e) {
+                // Java 17+ module system prevents access
+                System.err.println("Warning: Cannot access URLClassLoader.addURL method due to Java module system restrictions.");
+                System.err.println("To run on Java 21+, start the server with: --add-opens=java.base/java.net=ALL-UNNAMED");
+            }
         } catch (NoSuchMethodException e) {
             throw new ExceptionInInitializerError(e);
+        } catch (RuntimeException e) {
+            if (e.getCause() instanceof java.lang.reflect.InaccessibleObjectException) {
+                System.err.println("Warning: Cannot access URLClassLoader.addURL method due to Java module system restrictions.");
+                System.err.println("To run on Java 21+, start the server with: --add-opens=java.base/java.net=ALL-UNNAMED");
+            } else {
+                throw new ExceptionInInitializerError(e);
+            }
         }
+        
+        ADD_URL_METHOD = method;
+        ACCESS_AVAILABLE = accessAvailable;
     }
 
     private final URLClassLoader classLoader;
@@ -57,6 +78,13 @@ public class ReflectionClassLoader implements PluginClassLoader {
 
     @Override
     public void loadJar(Path file) {
+        if (!ACCESS_AVAILABLE) {
+            throw new RuntimeException(new IllegalAccessException(
+                "Cannot access URLClassLoader.addURL method due to Java module system restrictions. " +
+                "To run on Java 21+, start the server with: --add-opens=java.base/java.net=ALL-UNNAMED"
+            ));
+        }
+        
         try {
             ADD_URL_METHOD.invoke(this.classLoader, file.toUri().toURL());
         } catch (IllegalAccessException | InvocationTargetException | MalformedURLException e) {

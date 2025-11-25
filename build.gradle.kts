@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm")
 }
 
-val pluginName = "NekoPitPremium"
+val pluginName = "ThePitPremium"
 val version = "3.93"
 repositories {
     maven("https://maven.aliyun.com/repository/public/")
@@ -25,9 +25,10 @@ repositories {
 
 dependencies {
     compileOnly(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    compileOnly("org.mongodb:mongo-java-driver:3.12.11")
-    compileOnly("org.mongojack:mongojack:4.8.1")
-    compileOnly("org.mongodb:mongodb-driver-sync:5.2.0")
+    implementation("org.mongodb:mongo-java-driver:3.12.11")
+    implementation("org.mongojack:mongojack:4.8.1")
+    implementation("org.mongodb:mongodb-driver-core:4.11.1")
+    implementation("org.mongodb:bson:4.11.1")
     compileOnly("redis.clients:jedis:2.9.0")
     compileOnly("org.java-websocket:Java-WebSocket:1.6.0")
     compileOnly("it.unimi.dsi:fastutil:8.5.13")
@@ -36,7 +37,7 @@ dependencies {
     api(libs.slf4j)
     api(libs.reflectionhelper)
     compileOnly(libs.luckperms)
-    compileOnly(libs.narshorn)
+    implementation(libs.narshorn)
     compileOnly(libs.httpclient)
     compileOnly(libs.httpcore)
     compileOnly(libs.decentholograms)
@@ -64,5 +65,5 @@ tasks.withType<Javadoc> {
     options.encoding = "UTF-8"
 }
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(21)
 }

@@ -7,7 +7,7 @@ import cn.charlotte.pit.buff.BuffFactory;
 import cn.charlotte.pit.config.PitConfig;
 import cn.charlotte.pit.data.FixedRewardData;
 import cn.charlotte.pit.data.PlayerProfile;
-import cn.charlotte.pit.database.MongoDB;
+
 import cn.charlotte.pit.enchantment.EnchantmentFactor;
 import cn.charlotte.pit.event.OriginalTimeChangeEvent;
 import cn.charlotte.pit.events.EventFactory;
@@ -79,7 +79,7 @@ public class ThePit extends JavaPlugin implements PluginMessageListener {
 
     private static String random;
 
-    private MongoDB mongoDB;
+    private cn.charlotte.pit.database.MySQL mySQL;
     private JedisPool jedis;
     private PitConfig pitConfig;
     private EnchantmentFactor enchantmentFactor;
@@ -136,6 +136,9 @@ public class ThePit extends JavaPlugin implements PluginMessageListener {
 
         this.loadConfig();
         this.loadDatabase();
+        
+        
+        
         this.loadListener();
         PitMain.start();
         this.loadMenu();
@@ -204,6 +207,11 @@ public class ThePit extends JavaPlugin implements PluginMessageListener {
                 }
             }
             CC.boardCast("&6&l公告! &7关闭服务器...");
+        }
+        
+        // Close MySQL connection
+        if (mySQL != null) {
+            mySQL.close();
         }
     }
 
@@ -338,10 +346,10 @@ public class ThePit extends JavaPlugin implements PluginMessageListener {
     }
 
     private void loadDatabase() {
-        log.info("Loading mongodb...");
-        this.mongoDB = new MongoDB();
-        this.mongoDB.connect();
-        log.info("Loaded mongodb!");
+        log.info("Loading mysql...");
+        this.mySQL = new cn.charlotte.pit.database.MySQL();
+        this.mySQL.connect();
+        log.info("Loaded mysql!");
     }
 
     private void loadNpc() {
@@ -436,13 +444,7 @@ public class ThePit extends JavaPlugin implements PluginMessageListener {
                         "1.2",
                         LoaderType.REFLECTION
                 ),
-                new Dependency(
-                        "MongoDB",
-                        "org.mongodb",
-                        "mongo-java-driver",
-                        "3.12.2",
-                        LoaderType.REFLECTION
-                ),
+                
                 new Dependency(
                         "Jedis",
                         "redis.clients",
@@ -659,12 +661,19 @@ public class ThePit extends JavaPlugin implements PluginMessageListener {
                         "nashorn-core",
                         "15.3",
                         LoaderType.REFLECTION
+                ),
+                new Dependency(
+                        "mysql-connector-java",
+                        "mysql",
+                        "mysql-connector-java",
+                        "8.0.33",
+                        LoaderType.REFLECTION
                 )
         );
     }
 
-    public MongoDB getMongoDB() {
-        return this.mongoDB;
+    public cn.charlotte.pit.database.MySQL getMySQL() {
+        return this.mySQL;
     }
 
     public PitConfig getPitConfig() {

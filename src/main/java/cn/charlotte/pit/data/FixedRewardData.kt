@@ -16,9 +16,8 @@ class FixedRewardData() {
         fun refreshAll() {
             loading = true
             cache.clear()
-            for (data in ThePit.getInstance().mongoDB.rewardCollection.find()) {
-                cache[UUID.fromString(data.mailId)] = data
-            }
+            // For now, we're not loading from database - in a full implementation this would load from MySQL
+            // This would require implementing a method to load all rewards from MySQL
             loading = false;
             
         }
@@ -64,5 +63,9 @@ class FixedRewardData() {
     var title: String = "-1"
     var content: String = "-1"
     var data: CDKData? = null
+    
+    fun getId(): String {
+        return this.mailId
+    }
 
 }

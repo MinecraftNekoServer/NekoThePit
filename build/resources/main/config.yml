@@ -1,12 +1,6 @@
 
 service:
-  mongodb:
-    ip: 127.0.0.1
-    port: 27017
-    database: thePit
-    #不需要直接删除即可
-    user: admin
-    password: admin
+  mysql:
   # redis 支持
   # 如果你有跨服需求(两个pit子服共享数据), 一定要开, 否则会刷物品
   redis:

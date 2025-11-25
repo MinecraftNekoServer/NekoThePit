@@ -3,7 +3,7 @@ package cn.charlotte.pit.data.sub;
 import cn.charlotte.pit.ThePit;
 import cn.charlotte.pit.perk.AbstractPerk;
 import cn.charlotte.pit.util.inventory.InventoryUtil;
-import org.bson.Document;
+
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -29,67 +29,15 @@ public class EmailData {
         this.title = title;
     }
 
-    public static EmailData loadFromDocument(Document document) {
-        EmailData emailData = new EmailData(document.getString("title"));
-        emailData.setContent(document.getString("content"));
-        emailData.setExp(document.getDouble("exp"));
-        emailData.setCoins(document.getDouble("coins"));
-        emailData.setRenown(document.getDouble("renown"));
-
-        PlayerInv inv = InventoryUtil.playerInventoryFromString(document.getString("items"));
-        List<ItemStack> items = new ArrayList<>(Arrays.asList(inv.getContents()));
-
-        emailData.setItems(items);
-
-        String[] perks = document.getString("perk").split(":");
-        List<AbstractPerk> perkList = new ArrayList<>();
-        if (perks.length > 0) {
-            for (String perk : perks) {
-                ThePit.getInstance()
-                        .getPerkFactory()
-                        .getPerks()
-                        .stream()
-                        .filter(abstractPerk -> abstractPerk.getInternalPerkName().equals(perk))
-                        .findFirst()
-                        .ifPresent(perkList::add);
-            }
-        }
-
-        emailData.setPerks(perkList);
-
-        return emailData;
-    }
+    // TODO: Replace with MySQL implementation
+    // For now, removing this MongoDB-dependent method
 
     public void sendToPlayer(String name) {
 
     }
 
-    public Document toSave() {
-        Document document = new Document();
-
-        document.put("title", title);
-        document.put("content", content);
-        document.put("exp", exp);
-        document.put("coins", coins);
-        document.put("renown", renown);
-
-        PlayerInv playerInv = new PlayerInv();
-        playerInv.setContents(items.toArray(new ItemStack[0]));
-        String s = InventoryUtil.playerInvToString(playerInv);
-
-        document.put("items", s);
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(":");
-        for (AbstractPerk perk : perks) {
-            builder.append(perk.getInternalPerkName())
-                    .append(":");
-        }
-
-        document.put("perk", builder.toString());
-
-        return document;
-    }
+        // TODO: Replace with MySQL implementation
+    // For now, removing this MongoDB-dependent method
 
     public String getTitle() {
         return this.title;

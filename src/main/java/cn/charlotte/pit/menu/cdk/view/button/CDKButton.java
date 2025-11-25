@@ -10,7 +10,7 @@ import cn.charlotte.pit.util.item.ItemBuilder;
 import cn.charlotte.pit.util.menu.Button;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.mongodb.client.model.Filters;
+
 import lombok.SneakyThrows;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -67,12 +67,10 @@ public class CDKButton extends Button {
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton, ItemStack currentItem) {
         if (clickType == ClickType.RIGHT) {
             CDKData.getCachedCDK().remove(data.getCdk());
-            ThePit.getInstance()
-                    .getMongoDB()
-                    .getCdkCollection()
-                    .deleteOne(Filters.eq("cdk", data.getCdk()));
+            // TODO: Replace with MySQL implementation
+            // For now, just removing from cache
             player.closeInventory();
-            player.sendMessage(CC.translate("&c删除完成."));
+            player.sendMessage(CC.translate("&c删除完成(数据库部分待实现)."));
             return;
         }
         if (clickType == ClickType.LEFT) {

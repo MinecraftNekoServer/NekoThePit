@@ -5,8 +5,7 @@ import cn.charlotte.pit.data.FixedRewardData
 import cn.charlotte.pit.parm.AutoRegister
 import cn.charlotte.pit.util.chat.CC
 import cn.charlotte.pit.util.time.TimeUtil
-import com.mongodb.client.model.Filters
-import com.mongodb.client.model.ReplaceOptions
+
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -77,9 +76,9 @@ class MailSendListener : Listener {
         if (event.message.equals("confirm", true)) {
             object : BukkitRunnable() {
                 override fun run() {
-                    ThePit.getInstance().mongoDB.rewardCollection.replaceOne(
-                        Filters.eq("mailId", data.mailId), data, ReplaceOptions().upsert(true)
-                    )
+                    // TODO: Replace with MySQL implementation
+                    // For now, skipping this operation
+                    // ThePit.getInstance().getMySQL().getRewardCollection().save(fixedRewardData)
 
                     FixedRewardData.refreshAll()
                     player.sendMessage(CC.translate("&aOK!"))

@@ -2,10 +2,11 @@ package cn.charlotte.pit.runnable;
 
 import cn.charlotte.pit.ThePit;
 import cn.charlotte.pit.data.LeaderBoardEntry;
-import com.mongodb.client.model.Filters;
-import org.bson.Document;
+
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -31,7 +32,7 @@ public class LeaderBoardRunnable implements Runnable {
     @Override
     public void run() {
         try {
-            List<Document> documents = loadDocuments();
+            List<Map<String, Object>> documents = loadDocuments();
             List<LeaderBoardEntry> entries = processDocuments(documents);
             updateLeaderBoardEntries(entries);
         } catch (Exception e) {
@@ -39,55 +40,33 @@ public class LeaderBoardRunnable implements Runnable {
         }
     }
 
-    private List<Document> loadDocuments() {
-        try (var cursor = instance.getMongoDB()
-                .getCollection()
-                .find()
-                .sort(Filters.eq("totalExp", -1))
-                .filter(Filters.gte("lastLogoutTime", System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000))
-                .cursor()) {
-
-            List<Document> documents = new ArrayList<>();
-            while (cursor.hasNext()) {
-                documents.add(cursor.next());
-            }
-            return documents;
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "从MongoDB加载数据时发生错误：", e);
-            throw e;
-        }
+    private List<Map<String, Object>> loadDocuments() {
+        // TODO: Implement leaderboard loading from MySQL
+        // For now, returning an empty list
+        // This would require complex MySQL query to fetch player data ordered by totalExp
+        return new ArrayList<>();
     }
 
-    private List<LeaderBoardEntry> processDocuments(List<Document> documents) {
+    private List<LeaderBoardEntry> processDocuments(List<Map<String, Object>> documents) {
         List<LeaderBoardEntry> entries = new ArrayList<>();
-        int rank = 1;
-        for (Document document : documents) {
-            try {
-                String name = document.getString("playerName");
-                String uuid = document.getString("uuid");
-                Double experience = getExperience(document);
-                int prestige = document.getInteger("prestige");
-                entries.add(new LeaderBoardEntry(name, UUID.fromString(uuid), rank, experience, prestige));
-                rank++;
-            } catch (Exception e) {
-                LOGGER.log(Level.WARNING, "处理文档时发生错误：", e);
+        for (Map<String, Object> document : documents) {
+            String playerName = (String) document.get("playerName");
+            Double totalExp = (Double) document.get("totalExp");
+            if (playerName != null && totalExp != null) {
+                entries.add(new LeaderBoardEntry(playerName, UUID.randomUUID(), 0, totalExp, 0));
             }
         }
         return entries;
     }
 
-    private Double getExperience(Document document) {
-        final Object expObj = document.get("experience");
-        try {
-            return (Double) expObj;
-        } catch (ClassCastException e) {
-            try {
-                return Double.valueOf(((Integer) expObj));
-            } catch (Exception ex) {
-                LOGGER.log(Level.SEVERE, "无法转换experience值：", ex);
-                return 0.0;
-            }
+    private Double getExperience(Map<String, Object> document) {
+        Object experience = document.get("totalExp");
+        if (experience instanceof Integer) {
+            return ((Integer) experience).doubleValue();
+        } else if (experience instanceof Double) {
+            return (Double) experience;
         }
+        return null;
     }
 
     private void updateLeaderBoardEntries(List<LeaderBoardEntry> entries) {

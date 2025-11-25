@@ -25,28 +25,28 @@ public class PitConfig extends Configuration {
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @ConfigData(
-            path = "service.mongodb.ip"
+            path = "service.mysql.ip"
     )
-    private String mongoDBAddress;
+    private String mySQLAddress;
     @ConfigData(
-            path = "service.mongodb.port"
+            path = "service.mysql.port"
     )
-    private int mongoDBPort;
+    private int mySQLPort;
 
     @ConfigData(
-            path = "service.mongodb.database"
+            path = "service.mysql.database"
     )
-    private String databaseName;
+    private String mySQLDatabase;
 
     @ConfigData(
-            path = "service.mongodb.user"
+            path = "service.mysql.user"
     )
-    private String mongoUser;
+    private String mySQLUser;
 
     @ConfigData(
-            path = "service.mongodb.password"
+            path = "service.mysql.password"
     )
-    private String mongoPassword;
+    private String mySQLPassword;
 
     @ConfigData(
             path = "service.redis.enable"

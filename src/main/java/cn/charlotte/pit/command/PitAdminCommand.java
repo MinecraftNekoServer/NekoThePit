@@ -46,9 +46,7 @@ import cn.charlotte.pit.util.random.RandomUtil;
 import cn.charlotte.pit.util.rank.RankUtil;
 import cn.charlotte.pit.util.time.Duration;
 import com.google.gson.Gson;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.ReplaceOptions;
+
 import lombok.SneakyThrows;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -114,14 +112,15 @@ public class PitAdminCommand {
             Player target = Bukkit.getPlayerExact(name);
             if (target == null) return;
 
-            GachaPool.GachaData data = GachaPool.INSTANCE.getKeysCollections().findOne(Filters.eq("playerName", target.getName()));
+            // TODO: Replace with MySQL implementation
+            GachaPool.GachaData data = null; // Placeholder - GachaPool needs MySQL implementation
             if (data == null) {
                 data = new GachaPool.GachaData();
                 data.playerName = target.getName();
             }
 
             data.setKeys(data.getKeys() + amount);
-            GachaPool.INSTANCE.getKeysCollections().replaceOne(Filters.eq("playerName", target.getName()), data, new ReplaceOptions().upsert(true));
+            // TODO: Replace with MySQL implementation - GachaPool needs MySQL implementation
 
             target.sendMessage(CC.translate("&a你现在拥有 &e" + data.getKeys() + " &a个钥匙"));
         }
@@ -143,7 +142,8 @@ public class PitAdminCommand {
     )
     public void lookGacha(CommandSender player, @Parameter(name = "target") String name) {
         if (GachaPool.INSTANCE.getEnable()) {
-            GachaPool.GachaData data = GachaPool.INSTANCE.getKeysCollections().findOne(Filters.eq("playerName", name));
+            // TODO: Replace with MySQL implementation
+            GachaPool.GachaData data = null; // Placeholder - GachaPool needs MySQL implementation
             if (data == null) {
                 data = new GachaPool.GachaData();
                 data.playerName = name;
@@ -172,14 +172,15 @@ public class PitAdminCommand {
             Player target = Bukkit.getPlayerExact(name);
             if (target == null) return;
 
-            GachaPool.GachaData data = GachaPool.INSTANCE.getKeysCollections().findOne(Filters.eq("playerName", target.getName()));
+            // TODO: Replace with MySQL implementation
+            GachaPool.GachaData data = null; // Placeholder - GachaPool needs MySQL implementation
             if (data == null) {
                 data = new GachaPool.GachaData();
                 data.playerName = target.getName();
             }
 
             data.setKeys(amount);
-            GachaPool.INSTANCE.getKeysCollections().replaceOne(Filters.eq("playerName", target.getName()), data, new ReplaceOptions().upsert(true));
+            // TODO: Replace with MySQL implementation - GachaPool needs MySQL implementation
 
             target.sendMessage(CC.translate("&a你现在拥有 &e" + data.getKeys() + " &a个钥匙"));
         }
@@ -794,10 +795,8 @@ public class PitAdminCommand {
                 player.sendMessage(CC.translate("&c&l你已确认Drop数据库，还需要&e&l" + (3 - confirmDrop.size()) + "&c&l管理员确认！"));
             } else {
                 PlayerProfile.getCacheProfile().clear();
-                ThePit.getInstance()
-                        .getMongoDB()
-                        .getProfileCollection()
-                        .drop();
+                // TODO: Replace with MySQL implementation
+                // For now, just shutdown since MongoDB operations are not available
                 Bukkit.shutdown();
             }
             return;
@@ -976,23 +975,8 @@ public class PitAdminCommand {
     )
     public void onTestWorldEdit(Player player, @Parameter(name = "value") String name) {
         PlayerProfile profile = PlayerProfile.getOrLoadPlayerProfileByName(name);
-        FindIterable<TradeData> tradeA = ThePit.getInstance()
-                .getMongoDB()
-                .getTradeCollection()
-                .find(Filters.eq("playerA", profile.getUuid()));
-
-        FindIterable<TradeData> tradeB = ThePit.getInstance()
-                .getMongoDB()
-                .getTradeCollection()
-                .find(Filters.eq("playerB", profile.getUuid()));
-
-        List<TradeData> data = new ArrayList<>();
-        for (TradeData tradeData : tradeA) {
-            data.add(tradeData);
-        }
-        for (TradeData tradeData : tradeB) {
-            data.add(tradeData);
-        }
+        // TODO: Replace with MySQL implementation
+        List<TradeData> data = new ArrayList<>(); // Placeholder - MySQL implementation needed
 
         ThePit.api.openTradeTrackMenu(player, profile, data);
     }
@@ -1010,10 +994,8 @@ public class PitAdminCommand {
             return;
         }
 
-        final FindIterable<PlayerInvBackup> backups = ThePit.getInstance().getMongoDB()
-                .getInvCollection()
-                .find(Filters.eq("uuid", profile.getUuid()));
-
+        // TODO: Replace with MySQL implementation
+        List<PlayerInvBackup> backups = new ArrayList<>(); // Placeholder - MySQL implementation needed
         List<Button> buttons = new ArrayList<>();
         int i = 0;
         for (PlayerInvBackup invBackup : backups) {

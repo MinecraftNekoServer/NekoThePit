@@ -4,8 +4,7 @@ import cn.charlotte.pit.ThePit;
 import cn.charlotte.pit.data.sub.PlayerEnderChest;
 import cn.charlotte.pit.data.sub.PlayerInv;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.ReplaceOptions;
+
 import lombok.SneakyThrows;
 
 /**
@@ -27,9 +26,9 @@ public class PlayerInvBackup {
     @SneakyThrows
     public void save() {
         ThePit.getInstance()
-                .getMongoDB()
+                .getMySQL()
                 .getInvCollection()
-                .replaceOne(Filters.eq("backupUuid", backupUuid), this, new ReplaceOptions().upsert(true));
+                .save(this);
     }
 
     public String getUuid() {

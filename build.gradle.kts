@@ -25,10 +25,10 @@ repositories {
 
 dependencies {
     compileOnly(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("org.mongodb:mongo-java-driver:3.12.11")
-    implementation("org.mongojack:mongojack:4.8.1")
-    implementation("org.mongodb:mongodb-driver-core:4.11.1")
-    implementation("org.mongodb:bson:4.11.1")
+    implementation("mysql:mysql-connector-java:8.0.33")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
     compileOnly("redis.clients:jedis:2.9.0")
     compileOnly("org.java-websocket:Java-WebSocket:1.6.0")
     compileOnly("it.unimi.dsi:fastutil:8.5.13")

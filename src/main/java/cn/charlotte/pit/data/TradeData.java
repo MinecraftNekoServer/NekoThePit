@@ -3,8 +3,7 @@ package cn.charlotte.pit.data;
 import cn.charlotte.pit.ThePit;
 import cn.charlotte.pit.data.sub.PlayerInv;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.ReplaceOptions;
+
 
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -52,9 +51,9 @@ public class TradeData {
     public void save() {
         executor.execute(() -> {
             ThePit.getInstance()
-                    .getMongoDB()
+                    .getMySQL()
                     .getTradeCollection()
-                    .replaceOne(Filters.eq("tradeUuid", tradeUuid), this, new ReplaceOptions().upsert(true));
+                    .save(this);
         });
     }
 

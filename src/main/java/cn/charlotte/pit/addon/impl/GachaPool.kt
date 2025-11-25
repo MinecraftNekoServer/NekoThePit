@@ -13,9 +13,6 @@ import cn.charlotte.pit.util.menu.buttons.DisplayButton
 import cn.charlotte.pit.util.random.RandomUtil
 import cn.charlotte.pit.util.toMythicItem
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.mongodb.client.model.Filters
-import com.mongodb.client.model.ReplaceOptions
-import org.bson.UuidRepresentation
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.configuration.file.YamlConfiguration
@@ -23,8 +20,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
-import org.mongojack.DBQuery
-import org.mongojack.JacksonMongoCollection
 import sinc.Native
 import java.io.File
 import java.util.*
@@ -39,10 +34,9 @@ object GachaPool : Addon {
 
     val rewards = ArrayList<Reward>()
 
-    val keysCollections by lazy {
-        JacksonMongoCollection.builder()
-            .build(ThePit.getInstance().mongoDB.database.getCollection("gacha", GachaData::class.java), GachaData::class.java, UuidRepresentation.JAVA_LEGACY);
-    }
+    // TODO: Replace with MySQL implementation
+    // For now, we'll use a temporary placeholder
+    // This would require implementing a MySQL-based data access layer for GachaData
 
     var enable = false
 
@@ -164,21 +158,10 @@ object GachaPool : Addon {
 
         if (player == null) return false
 
-        val data = keysCollections.findOne(DBQuery.`is`("playerName", player.name))
-        if (data == null) {
-            player.sendMessage(CC.translate("&c你的钥匙不足"))
-            return false
-        }
-        if (data.keys <= 0) {
-            player.sendMessage(CC.translate("&c你的钥匙不足"))
-            return false
-        }
-
-        if (rolling.contains(player.uniqueId)) return false
-        rolling.add(player.uniqueId)
-
-        data.keys--
-        keysCollections.replaceOne(Filters.eq("playerName", player.name), data, ReplaceOptions().upsert(true))
+        // TODO: Replace with MySQL implementation
+        // For now, returning false to indicate the feature is not available
+        player.sendMessage(CC.translate("&c该功能暂时不可用 (等待MySQL实现)"))
+        return false
 
         val menu = GachaMenu()
         menu.openMenu(player)

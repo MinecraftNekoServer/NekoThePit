@@ -48,7 +48,7 @@ public class DataListener implements Listener {
         JedisPool jedisPool = ThePit.getInstance().getJedis();
         if (jedisPool != null) {
             executor.scheduleAtFixedRate(() -> {
-                String databaseName = ThePit.getInstance().getPitConfig().getDatabaseName();
+                String databaseName = ThePit.getInstance().getPitConfig().getMySQLDatabase();
 
                 try(Jedis jedis = jedisPool.getResource()) {
                     for (Player player : Bukkit.getOnlinePlayers()) {
@@ -137,7 +137,7 @@ public class DataListener implements Listener {
                 this.executor.execute(() -> {
                     profile.save(null);
                     PlayerProfile.getCacheProfile().remove(event.getPlayer().getUniqueId());
-                    String databaseName = ThePit.getInstance().getPitConfig().getDatabaseName();
+                    String databaseName = ThePit.getInstance().getPitConfig().getMySQLDatabase();
 
                     JedisPool jedisPool = ThePit.getInstance().getJedis();
                     if (jedisPool != null) {
@@ -178,7 +178,7 @@ public class DataListener implements Listener {
     }
 
     public boolean canLoad(Player player) {
-        String databaseName = ThePit.getInstance().getPitConfig().getDatabaseName();
+        String databaseName = ThePit.getInstance().getPitConfig().getMySQLDatabase();
         JedisPool jedisPool = ThePit.getInstance().getJedis();
         if (jedisPool != null) {
             try (Jedis jedis = jedisPool.getResource()) {

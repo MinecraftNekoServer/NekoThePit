@@ -3,8 +3,7 @@ package cn.charlotte.pit.data;
 import cn.charlotte.pit.ThePit;
 import cn.charlotte.pit.data.mail.Mail;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.ReplaceOptions;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +58,9 @@ public class PlayerMailData {
      */
     public void save() {
         ThePit.getInstance()
-                .getMongoDB()
+                .getMySQL()
                 .getMailCollection()
-                .replaceOne(Filters.eq("uuid", this.uuid), this, new ReplaceOptions().upsert(true));
+                .save(this);
     }
 
     public String getUuid() {

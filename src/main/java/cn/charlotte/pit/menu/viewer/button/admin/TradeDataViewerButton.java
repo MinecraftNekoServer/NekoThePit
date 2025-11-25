@@ -6,8 +6,7 @@ import cn.charlotte.pit.data.TradeData;
 import cn.charlotte.pit.util.inventory.InventoryUtil;
 import cn.charlotte.pit.util.item.ItemBuilder;
 import cn.charlotte.pit.util.menu.Button;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.model.Filters;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -39,22 +38,10 @@ public class TradeDataViewerButton extends Button {
         List<String> lores = new ArrayList<>();
 
         List<TradeData> data = new ArrayList<>();
-        FindIterable<TradeData> tradeA = ThePit.getInstance()
-                .getMongoDB()
-                .getTradeCollection()
-                .find(Filters.eq("playerA", profile.getUuid()));
+        List<TradeData> tradeA = new ArrayList<>(); // TODO: Replace with MySQL implementation
+        List<TradeData> tradeB = new ArrayList<>(); // TODO: Replace with MySQL implementation
 
-        FindIterable<TradeData> tradeB = ThePit.getInstance()
-                .getMongoDB()
-                .getTradeCollection()
-                .find(Filters.eq("playerB", profile.getUuid()));
-
-        for (TradeData tradeData : tradeA) {
-            data.add(tradeData);
-        }
-        for (TradeData tradeData : tradeB) {
-            data.add(tradeData);
-        }
+        // For now, skipping data retrieval - data remains empty
         int tradeTimesInSevenDays = 0;
         int itemTransferredInSevenDays = 0;
         double coinsTransferredInSevenDays = 0;
@@ -114,15 +101,9 @@ public class TradeDataViewerButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton, ItemStack currentItem) {
-        FindIterable<TradeData> tradeA = ThePit.getInstance()
-                .getMongoDB()
-                .getTradeCollection()
-                .find(Filters.eq("playerA", profile.getUuid()));
-
-        FindIterable<TradeData> tradeB = ThePit.getInstance()
-                .getMongoDB()
-                .getTradeCollection()
-                .find(Filters.eq("playerB", profile.getUuid()));
+        // TODO: Replace with MySQL implementation
+        List<TradeData> tradeA = new ArrayList<>(); // Placeholder - MySQL implementation needed
+        List<TradeData> tradeB = new ArrayList<>(); // Placeholder - MySQL implementation needed
 
         List<TradeData> data = new ArrayList<>();
         for (TradeData tradeData : tradeA) {

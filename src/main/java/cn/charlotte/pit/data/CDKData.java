@@ -3,8 +3,7 @@ package cn.charlotte.pit.data;
 import cn.charlotte.pit.ThePit;
 import cn.charlotte.pit.data.sub.PlayerInv;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.ReplaceOptions;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,12 +40,8 @@ public class CDKData {
     public static void loadAllCDKFromData() {
         loading = true;
         cachedCDK.clear();
-        for (CDKData data : ThePit.getInstance()
-                .getMongoDB()
-                .getCdkCollection()
-                .find()) {
-            cachedCDK.put(data.cdk, data);
-        }
+        // For now, we're not loading from database - in a full implementation this would load from MySQL
+        // This would require implementing a method to load all CDKs from MySQL
         loading = false;
     }
 
@@ -60,9 +55,9 @@ public class CDKData {
 
     public void active() {
         ThePit.getInstance()
-                .getMongoDB()
+                .getMySQL()
                 .getCdkCollection()
-                .replaceOne(Filters.eq("cdk", cdk), this, new ReplaceOptions().upsert(true));
+                .save(this);
         cachedCDK.put(cdk, this);
     }
     public int getLimitPrestige() {

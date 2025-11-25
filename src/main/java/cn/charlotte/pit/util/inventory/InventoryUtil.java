@@ -8,7 +8,7 @@ import cn.charlotte.pit.util.chat.CC;
 import cn.charlotte.pit.util.item.ItemBuilder;
 import cn.charlotte.pit.util.item.ItemUtil;
 import net.minecraft.server.v1_8_R3.*;
-import org.bson.internal.Base64;
+import java.util.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -332,14 +332,14 @@ public class InventoryUtil {
             return null;
         }
 
-        return Base64.encode(outputStream.toByteArray());
+        return java.util.Base64.getEncoder().encodeToString(outputStream.toByteArray());
     }
 
 
     public static ItemStack deserializeItemStack(String itemStackString) {
         if (itemStackString == null || "null".equals(itemStackString)) return null;
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64.decode(itemStackString));
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(java.util.Base64.getDecoder().decode(itemStackString));
 
         NBTTagCompound nbtTagCompound = null;
         ItemStack itemStack = null;

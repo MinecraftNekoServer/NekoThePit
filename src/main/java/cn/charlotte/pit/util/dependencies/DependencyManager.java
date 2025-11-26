@@ -143,41 +143,34 @@ public class DependencyManager {
         boolean success = false;
         Exception lastError = null;
 
-        // getUrls returns two possible sources of the dependency.
-        // [0] is a mirror of Maven Central, used to reduce load on central. apparently they don't like being used as a CDN
-        // [1] is Maven Central itself
-
-        // side note: the relative "security" of the mirror is less than central, but it actually doesn't matter.
-        // we compare the downloaded file against a checksum here, so even if the mirror became compromised, RCE wouldn't be possible.
-        // if the mirror download doesn't match the checksum, we just try maven central instead.
-
+        // getUrls returns possible sources of the dependency.
         List<URL> urls = dependency.getUrls();
         for (int i = 0; i < urls.size() && !success; i++) {
             URL url = urls.get(i);
 
             try {
+                System.out.println("Trying to download dependency from: " + url.toString());
                 URLConnection connection = url.openConnection();
-
-                // i == 0 when we're trying to use the mirror repo.
-                // set some timeout properties so when/if this repository goes offline, we quickly fallback to central.
-                if (i == 0) {
-                    connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36");
-                    connection.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(5));
-                    connection.setReadTimeout((int) TimeUnit.SECONDS.toMillis(10));
-                }
+                
+                // 添加通用的 User-Agent 请求头以避免被某些仓库拒绝
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+                connection.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(15));
+                connection.setReadTimeout((int) TimeUnit.SECONDS.toMillis(30));
 
                 try (InputStream in = connection.getInputStream()) {
                     // download the jar content
                     byte[] bytes = ByteStreams.toByteArray(in);
                     if (bytes.length == 0) {
-                        throw new RuntimeException("Empty stream");
+                        throw new RuntimeException("Empty stream from: " + url.toString());
                     }
 
+                    System.out.println("Successfully downloaded dependency from: " + url.toString() + " (" + bytes.length + " bytes)");
                     // if the checksum matches, save the content to disk
                     Files.write(file, bytes);
                     success = true;
                 }
             } catch (Exception e) {
+                System.out.println("Failed to download from: " + url.toString() + ", error: " + e.getMessage());
                 lastError = e;
             }
         }

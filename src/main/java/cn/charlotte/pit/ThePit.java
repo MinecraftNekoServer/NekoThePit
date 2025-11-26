@@ -444,7 +444,7 @@ public class ThePit extends JavaPlugin implements PluginMessageListener {
                         "1.2",
                         LoaderType.REFLECTION
                 ),
-                
+
                 new Dependency(
                         "Jedis",
                         "redis.clients",
@@ -660,13 +660,6 @@ public class ThePit extends JavaPlugin implements PluginMessageListener {
                         "org.openjdk.nashorn",
                         "nashorn-core",
                         "15.3",
-                        LoaderType.REFLECTION
-                ),
-                new Dependency(
-                        "mysql-connector-java",
-                        "mysql",
-                        "mysql-connector-java",
-                        "8.0.33",
                         LoaderType.REFLECTION
                 )
         );

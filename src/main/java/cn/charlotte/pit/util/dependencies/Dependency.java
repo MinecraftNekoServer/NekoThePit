@@ -34,9 +34,9 @@ import java.util.List;
 
 public class Dependency {
 
-    private static final String ALI_CENTRAL_REPO = "https://maven.aliyun.com/repository/central";
-    private static final String MAVEN_CENTRAL_REPO = "https://repo1.maven.org/maven2/";
     private static final String LUCK_MIRROR_REPO = "https://nexus.lucko.me/repository/maven-central/";
+    private static final String ALI_CENTRAL_REPO = "https://maven.aliyun.com/repository/central/";
+    private static final String MAVEN_CENTRAL_REPO = "https://repo1.maven.org/maven2/";
     private static final String ALIYUN_MIRROR_REPO = "https://maven.aliyun.com/nexus/content/groups/public/";
     private static final String AIKAR_REPO = "https://repo.aikar.co/content/groups/aikar/";
     private static final String OSSRH_REPO = "https://oss.sonatype.org/content/groups/public/";
@@ -63,10 +63,13 @@ public class Dependency {
         );
         try {
             this.urls = ImmutableList.of(
+                    // 优先使用 lucko 镜像
+                    new URL(LUCK_MIRROR_REPO + path),
+                    // 然后是阿里云镜像（使用正确格式）
+                    new URL(MAVEN_CENTRAL_REPO + path),
+                    // 备用仓库
                     new URL(ALI_CENTRAL_REPO + path),
                     new URL(ALIYUN_MIRROR_REPO + path),
-                    new URL(LUCK_MIRROR_REPO + path),
-                    new URL(MAVEN_CENTRAL_REPO + path),
                     new URL(AIKAR_REPO + path),
                     new URL(OSSRH_REPO + path)
             );

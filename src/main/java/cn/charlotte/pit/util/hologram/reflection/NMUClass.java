@@ -16,13 +16,28 @@ public abstract class NMUClass {
                 if (f.getType().equals(Class.class)) {
                     try {
                         String name = f.getName().replace("_", ".");
+                        Class<?> clazz;
+                        
                         if (Reflection.getVersion().contains("1_8")) {
-                            f.set(null, Class.forName(name));
+                            clazz = Class.forName(name);
                         } else {
-                            f.set(null, Class.forName("net.minecraft.util." + name));
+                            try {
+                                // 首先尝试加载 net.minecraft.util 下的类
+                                clazz = Class.forName("net.minecraft.util." + name);
+                            } catch (ClassNotFoundException e) {
+                                // 如果失败，尝试直接加载类（用于较老的版本）
+                                clazz = Class.forName(name);
+                            }
                         }
+                        
+                        f.set(null, clazz);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        // 静默处理类找不到的情况，不打印异常信息
+                        try {
+                            f.set(null, null); // 设置为 null 表示该类不可用
+                        } catch (IllegalAccessException ex) {
+                            // 如果无法设置字段，忽略
+                        }
                     }
                 }
             }

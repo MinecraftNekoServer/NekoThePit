@@ -39,7 +39,7 @@ object NewConfiguration {
 
     var kingsQuestsMarker: UUID = UUID.randomUUID()
 
-    var waterMark: String = "&eThePitPremium &7| &b2025-Future"
+    var waterMark: String = "&eNekoThePitPremium &7| &b2025-Future"
 
     var botName: String = "&cBot"
 
@@ -231,7 +231,7 @@ object NewConfiguration {
     )
 
     private val defaults = mapOf(
-        "water-mark" to "&eThePitPremium &7| &b2025-Future",
+        "water-mark" to "&eNekoThePitPremium &7| &b2025-Future",
         "bot-name" to "&cBot",
         "vip-price" to 500,
         "price-name" to "点券",

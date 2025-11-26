@@ -951,14 +951,24 @@ public class PitCommand {
             names = "mail"
     )
     public void openMailMenu(Player player) {
-        new cn.charlotte.pit.menu.mail.MailMenu().openMenu(player);
+        PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
+        if (profile.getLevel() >= 10 || profile.getPrestige() > 0) {
+            new cn.charlotte.pit.menu.mail.MailMenu().openMenu(player);
+        } else {
+            player.sendMessage(CC.translate("&c&l等级不足! &7邮件功能在 " + LevelUtil.getLevelTag(profile.getPrestige(), 10) + " &7时解锁."));
+        }
     }
 
     @Command(
             names = "perk"
     )
     public void openPerkMenu(Player player) {
-        new cn.charlotte.pit.menu.perk.normal.choose.PerkChooseMenu().openMenu(player);
+        PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
+        if (profile.getLevel() >= 10 || profile.getPrestige() > 0) {
+            new cn.charlotte.pit.menu.perk.normal.choose.PerkChooseMenu().openMenu(player);
+        } else {
+            player.sendMessage(CC.translate("&c&l等级不足! &7天赋功能在 " + LevelUtil.getLevelTag(profile.getPrestige(), 10) + " &7时解锁."));
+        }
     }
 
     @Command(
@@ -989,7 +999,12 @@ public class PitCommand {
             names = "shop"
     )
     public void openShopMenu(Player player) {
-        new cn.charlotte.pit.menu.shop.ShopMenu().openMenu(player);
+        PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
+        if (profile.getLevel() >= 10 || profile.getPrestige() > 0) {
+            new cn.charlotte.pit.menu.shop.ShopMenu().openMenu(player);
+        } else {
+            player.sendMessage(CC.translate("&c&l等级不足! &7商店功能在 " + LevelUtil.getLevelTag(profile.getPrestige(), 10) + " &7时解锁."));
+        }
     }
 
     @Command(
@@ -1016,7 +1031,7 @@ public class PitCommand {
             // 打开统计信息菜单
             new cn.charlotte.pit.menu.status.StatusMenu().openMenu(player);
         } else {
-            player.sendMessage(CC.translate("&c&l等级不足! &7此指令在 " + LevelUtil.getLevelTag(profile.getPrestige(), 50) + " &7时解锁."));
+            player.sendMessage(CC.translate("&c&l等级不足! &7统计信息功能在 " + LevelUtil.getLevelTag(profile.getPrestige(), 50) + " &7时解锁."));
         }
     }
 

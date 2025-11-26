@@ -863,4 +863,85 @@ public class PitCommand {
         CakeBakeUI.INSTANCE.openMenu(player);
     }
 
+    @Command(
+            names = "mail"
+    )
+    public void openMailMenu(Player player) {
+        new cn.charlotte.pit.menu.mail.MailMenu().openMenu(player);
+    }
+
+    @Command(
+            names = "perk"
+    )
+    public void openPerkMenu(Player player) {
+        new cn.charlotte.pit.menu.perk.normal.choose.PerkChooseMenu().openMenu(player);
+    }
+
+    @Command(
+            names = "quest"
+    )
+    public void openQuestMenu(Player player) {
+        PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
+        if (profile.getLevel() >= 30 || profile.getPrestige() > 0) {
+            new cn.charlotte.pit.menu.quest.main.QuestMenu().openMenu(player);
+        } else {
+            player.sendMessage(CC.translate("&c&l等级不足! &7任务功能在 " + LevelUtil.getLevelTag(profile.getPrestige(), 30) + " &7时解锁."));
+        }
+    }
+
+    @Command(
+            names = "prestige"
+    )
+    public void openPrestigeMenu(Player player) {
+        PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
+        if (profile.getLevel() >= 120 || profile.getPrestige() > 0) {
+            new cn.charlotte.pit.menu.prestige.PrestigeMainMenu().openMenu(player);
+        } else {
+            player.sendMessage(CC.translate("&c&l等级不足! &7精通功能在 " + LevelUtil.getLevelTag(profile.getPrestige(), 120) + " &7时解锁."));
+        }
+    }
+
+    @Command(
+            names = "shop"
+    )
+    public void openShopMenu(Player player) {
+        new cn.charlotte.pit.menu.shop.ShopMenu().openMenu(player);
+    }
+
+    @Command(
+            names = "demon"
+    )
+    public void openDemonMenu(Player player) {
+        new cn.charlotte.pit.menu.genesis.GenesisMenu(cn.charlotte.pit.events.genesis.team.GenesisTeam.DEMON).openMenu(player);
+    }
+
+    @Command(
+            names = "leaderboard"
+    )
+    public void openLeaderboardMenu(Player player) {
+        // 打开排行榜菜单
+        new cn.charlotte.pit.menu.leaderboard.LeaderBoardMenu().openMenu(player);
+    }
+
+    @Command(
+            names = "stats"
+    )
+    public void openStatsMenu(Player player) {
+        PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
+        if (profile.getLevel() >= 50 || profile.getPrestige() > 0) {
+            // 打开统计信息菜单
+            new cn.charlotte.pit.menu.status.StatusMenu().openMenu(player);
+        } else {
+            player.sendMessage(CC.translate("&c&l等级不足! &7此指令在 " + LevelUtil.getLevelTag(profile.getPrestige(), 50) + " &7时解锁."));
+        }
+    }
+
+    @Command(
+            names = "angel"
+    )
+    public void openAngelMenu(Player player) {
+        // 打开天使阵营菜单，无等级限制
+        new cn.charlotte.pit.menu.genesis.GenesisMenu(cn.charlotte.pit.events.genesis.team.GenesisTeam.ANGEL).openMenu(player);
+    }
+
 }

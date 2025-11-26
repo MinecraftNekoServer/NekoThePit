@@ -24,7 +24,6 @@ public class MySQL {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final ExecutorService executor = Executors.newFixedThreadPool(5);
 
-    private Connection connection;
     private String host;
     private int port;
     private String database;
@@ -41,11 +40,12 @@ public class MySQL {
         this.password = ThePit.getInstance().getPitConfig().getMySQLPassword();
 
         try {
+            // Test connection first
             String url = String.format("jdbc:mysql://%s:%d/%s?useSSL=false&allowPublicKeyRetrieval=true", host, port, database);
-            this.connection = DriverManager.getConnection(url, username, password);
-            
-            // Create tables if they don't exist
-            createTables();
+            try (Connection testConnection = DriverManager.getConnection(url, username, password)) {
+                // Create tables if they don't exist
+                createTables(testConnection);
+            }
             
             log.info("Connected to MySQL database!");
         } catch (SQLException e) {
@@ -54,8 +54,13 @@ public class MySQL {
         }
     }
 
-    private void createTables() throws SQLException {
-        Statement stmt = connection.createStatement();
+    private Connection createConnection() throws SQLException {
+        String url = String.format("jdbc:mysql://%s:%d/%s?useSSL=false&allowPublicKeyRetrieval=true", host, port, database);
+        return DriverManager.getConnection(url, username, password);
+    }
+
+    private void createTables(Connection conn) throws SQLException {
+        Statement stmt = conn.createStatement();
         
         // Create players table
         stmt.execute("CREATE TABLE IF NOT EXISTS players (" +
@@ -152,12 +157,16 @@ public class MySQL {
 
     public CompletableFuture<PlayerProfile> loadPlayerProfileByUuid(UUID uuid) {
         return CompletableFuture.supplyAsync(() -> {
+            Connection conn = null;
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
             try {
+                conn = createConnection();
                 String sql = "SELECT playerData, lastLoginTime, lastLogoutTime, totalPlayedTime, registerTime FROM players WHERE uuid = ?";
-                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt = conn.prepareStatement(sql);
                 stmt.setString(1, uuid.toString());
                 
-                ResultSet rs = stmt.executeQuery();
+                rs = stmt.executeQuery();
                 if (rs.next()) {
                     String playerDataJson = rs.getString("playerData");
                     PlayerProfile profile = objectMapper.readValue(playerDataJson, PlayerProfile.class);
@@ -177,17 +186,26 @@ public class MySQL {
                     return profile;
                 }
                 
-                stmt.close();
                 return null;
             } catch (Exception e) {
                 log.error("Error loading player profile by UUID: " + uuid, e);
                 return null;
+            } finally {
+                try {
+                    if (rs != null) rs.close();
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    log.warn("Error closing resources", e);
+                }
             }
         }, executor);
     }
 
     public void savePlayerProfile(PlayerProfile profile, Player player) {
         executor.execute(() -> {
+            Connection conn = null;
+            PreparedStatement stmt = null;
             try {
                 // Update inventory if player is provided
                 if (player != null) {
@@ -214,7 +232,8 @@ public class MySQL {
                         "lastLogoutTime = VALUES(lastLogoutTime), " +
                         "totalPlayedTime = VALUES(totalPlayedTime)";
 
-                PreparedStatement stmt = connection.prepareStatement(sql);
+                conn = getConnection();
+                stmt = conn.prepareStatement(sql);
                 stmt.setString(1, profile.getUuid());
                 stmt.setString(2, profile.getLowerName());
                 
@@ -228,21 +247,31 @@ public class MySQL {
                 stmt.setLong(7, profile.getRegisterTime());
                 
                 stmt.executeUpdate();
-                stmt.close();
             } catch (Exception e) {
                 log.error("Error saving player profile: " + profile.getUuid(), e);
+            } finally {
+                try {
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    log.warn("Error closing resources", e);
+                }
             }
         });
     }
 
     public CompletableFuture<PlayerProfile> loadPlayerProfileByName(String name) {
         return CompletableFuture.supplyAsync(() -> {
+            Connection conn = null;
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
             try {
+                conn = getConnection();
                 String sql = "SELECT playerData, lastLoginTime, lastLogoutTime, totalPlayedTime, registerTime FROM players WHERE lowerName = ?";
-                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt = conn.prepareStatement(sql);
                 stmt.setString(1, name.toLowerCase());
                 
-                ResultSet rs = stmt.executeQuery();
+                rs = stmt.executeQuery();
                 if (rs.next()) {
                     String playerDataJson = rs.getString("playerData");
                     PlayerProfile profile = objectMapper.readValue(playerDataJson, PlayerProfile.class);
@@ -256,24 +285,34 @@ public class MySQL {
                     return profile;
                 }
                 
-                stmt.close();
                 return null;
             } catch (Exception e) {
                 log.error("Error loading player profile by name: " + name, e);
                 return null;
+            } finally {
+                try {
+                    if (rs != null) rs.close();
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    log.warn("Error closing resources", e);
+                }
             }
         }, executor);
     }
 
     public void saveTradeData(TradeData tradeData) {
         executor.execute(() -> {
+            Connection conn = null;
+            PreparedStatement stmt = null;
             try {
                 String sql = "INSERT INTO trade (tradeUuid, playerA, playerB, playerAName, playerBName, completeTime, tradeData, timeStamp) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "completeTime = VALUES(completeTime), tradeData = VALUES(tradeData)";
 
-                PreparedStatement stmt = connection.prepareStatement(sql);
+                conn = getConnection();
+                stmt = conn.prepareStatement(sql);
                 stmt.setString(1, tradeData.getTradeUuid());
                 stmt.setString(2, tradeData.getPlayerA());
                 stmt.setString(3, tradeData.getPlayerB());
@@ -292,22 +331,31 @@ public class MySQL {
                 stmt.setLong(8, System.currentTimeMillis());
                 
                 stmt.executeUpdate();
-                stmt.close();
             } catch (Exception e) {
                 log.error("Error saving trade data: " + tradeData.getTradeUuid(), e);
+            } finally {
+                try {
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    log.warn("Error closing resources", e);
+                }
             }
         });
     }
 
     public void saveMailData(PlayerMailData mailData) {
         executor.execute(() -> {
+            Connection conn = null;
+            PreparedStatement stmt = null;
             try {
                 String sql = "INSERT INTO mail (uuid, name, nameLower, mailData) " +
                         "VALUES (?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "name = VALUES(name), nameLower = VALUES(nameLower), mailData = VALUES(mailData)";
 
-                PreparedStatement stmt = connection.prepareStatement(sql);
+                conn = getConnection();
+                stmt = conn.prepareStatement(sql);
                 stmt.setString(1, mailData.getUuid());
                 stmt.setString(2, mailData.getName());
                 stmt.setString(3, mailData.getNameLower());
@@ -321,22 +369,31 @@ public class MySQL {
                 stmt.setString(4, mailDataJson);
                 
                 stmt.executeUpdate();
-                stmt.close();
             } catch (Exception e) {
                 log.error("Error saving mail data for UUID: " + mailData.getUuid(), e);
+            } finally {
+                try {
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    log.warn("Error closing resources", e);
+                }
             }
         });
     }
 
     public void saveInventoryBackup(PlayerInvBackup backup) {
         executor.execute(() -> {
+            Connection conn = null;
+            PreparedStatement stmt = null;
             try {
                 String sql = "INSERT INTO inv (backupUuid, uuid, timeStamp, backupData) " +
                         "VALUES (?, ?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "timeStamp = VALUES(timeStamp), backupData = VALUES(backupData)";
 
-                PreparedStatement stmt = connection.prepareStatement(sql);
+                conn = getConnection();
+                stmt = conn.prepareStatement(sql);
                 stmt.setString(1, backup.getBackupUuid());
                 stmt.setString(2, backup.getUuid());
                 stmt.setLong(3, backup.getTimeStamp());
@@ -350,22 +407,31 @@ public class MySQL {
                 stmt.setString(4, backupDataJson);
                 
                 stmt.executeUpdate();
-                stmt.close();
             } catch (Exception e) {
                 log.error("Error saving inventory backup: " + backup.getBackupUuid(), e);
+            } finally {
+                try {
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    log.warn("Error closing resources", e);
+                }
             }
         });
     }
 
     public void saveCdkData(CDKData cdkData) {
         executor.execute(() -> {
+            Connection conn = null;
+            PreparedStatement stmt = null;
             try {
                 String sql = "INSERT INTO cdk (cdk, cdkData, createTime) " +
                         "VALUES (?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "cdkData = VALUES(cdkData), createTime = VALUES(createTime)";
 
-                PreparedStatement stmt = connection.prepareStatement(sql);
+                conn = getConnection();
+                stmt = conn.prepareStatement(sql);
                 stmt.setString(1, cdkData.getCdk());
                 
                 String cdkDataJson = "{}"; // Use empty JSON for now
@@ -379,22 +445,31 @@ public class MySQL {
                 stmt.setLong(3, System.currentTimeMillis());
                 
                 stmt.executeUpdate();
-                stmt.close();
             } catch (Exception e) {
                 log.error("Error saving CDK data: " + cdkData.getCdk(), e);
+            } finally {
+                try {
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    log.warn("Error closing resources", e);
+                }
             }
         });
     }
 
     public void saveRewardData(FixedRewardData rewardData) {
         executor.execute(() -> {
+            Connection conn = null;
+            PreparedStatement stmt = null;
             try {
                 String sql = "INSERT INTO reward (id, rewardData, createTime) " +
                         "VALUES (?, ?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "rewardData = VALUES(rewardData), createTime = VALUES(createTime)";
 
-                PreparedStatement stmt = connection.prepareStatement(sql);
+                conn = getConnection();
+                stmt = conn.prepareStatement(sql);
                 stmt.setString(1, rewardData.getId());
                 
                 String rewardDataJson = "{}"; // Use empty JSON for now
@@ -408,22 +483,31 @@ public class MySQL {
                 stmt.setLong(3, System.currentTimeMillis());
                 
                 stmt.executeUpdate();
-                stmt.close();
             } catch (Exception e) {
                 log.error("Error saving reward data: " + rewardData.getId(), e);
+            } finally {
+                try {
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    log.warn("Error closing resources", e);
+                }
             }
         });
     }
 
     public void saveEventQueueData(EventQueue eventQueue) {
         executor.execute(() -> {
+            Connection conn = null;
+            PreparedStatement stmt = null;
             try {
                 String sql = "INSERT INTO event_queue (id, queueData) " +
                         "VALUES (?, ?) " +
                         "ON DUPLICATE KEY UPDATE " +
                         "queueData = VALUES(queueData)";
 
-                PreparedStatement stmt = connection.prepareStatement(sql);
+                conn = getConnection();
+                stmt = conn.prepareStatement(sql);
                 stmt.setString(1, eventQueue.getId());
                 
                 String eventQueueJson = "{}"; // Use empty JSON for now
@@ -435,20 +519,30 @@ public class MySQL {
                 stmt.setString(2, eventQueueJson);
                 
                 stmt.executeUpdate();
-                stmt.close();
             } catch (Exception e) {
                 log.error("Error saving event queue data: " + eventQueue.getId(), e);
+            } finally {
+                try {
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    log.warn("Error closing resources", e);
+                }
             }
         });
     }
 
     private void loadMail(PlayerProfile playerProfile, UUID uuid) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         try {
+            conn = getConnection();
             String sql = "SELECT mailData FROM mail WHERE uuid = ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, uuid.toString());
             
-            ResultSet rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
             if (rs.next()) {
                 String mailDataJson = rs.getString("mailData");
                 PlayerMailData mailData = objectMapper.readValue(mailDataJson, PlayerMailData.class);
@@ -471,20 +565,30 @@ public class MySQL {
                 mailData.cleanUp();
                 playerProfile.setMailData(mailData);
             }
-            
-            stmt.close();
         } catch (Exception e) {
             log.error("Error loading mail for player: " + uuid, e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                log.warn("Error closing resources", e);
+            }
         }
     }
 
     private void loadInventoryBackups(PlayerProfile profile, UUID uuid) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         try {
+            conn = getConnection();
             String sql = "SELECT backupData FROM inv WHERE uuid = ? ORDER BY timeStamp DESC";
-            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, uuid.toString());
             
-            ResultSet rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
             long lastTime = 0;
             while (rs.next()) {
                 String backupDataJson = rs.getString("backupData");
@@ -492,46 +596,70 @@ public class MySQL {
                 
                 // Remove backups that are too close together in time (same as MongoDB version)
                 if (Math.abs(backup.getTimeStamp() - lastTime) < 10 * 60 * 1000) {
-                    // Remove this backup from database
-                    String deleteSql = "DELETE FROM inv WHERE backupUuid = ?";
-                    PreparedStatement deleteStmt = connection.prepareStatement(deleteSql);
-                    deleteStmt.setString(1, backup.getBackupUuid());
-                    deleteStmt.executeUpdate();
-                    deleteStmt.close();
+                    // Remove this backup from database using a separate connection
+                    deleteBackup(backup.getBackupUuid());
                     continue;
                 }
                 
                 lastTime = backup.getTimeStamp();
                 profile.getInvBackups().add(backup);
             }
-            
-            stmt.close();
         } catch (Exception e) {
             log.error("Error loading inventory backups for player: " + uuid, e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                log.warn("Error closing resources", e);
+            }
+        }
+    }
+
+    private void deleteBackup(String backupUuid) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = getConnection();
+            String deleteSql = "DELETE FROM inv WHERE backupUuid = ?";
+            stmt = conn.prepareStatement(deleteSql);
+            stmt.setString(1, backupUuid);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Error deleting backup: " + backupUuid, e);
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                log.warn("Error closing resources", e);
+            }
         }
     }
 
     public void close() {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-                log.info("MySQL connection closed!");
-            }
-        } catch (SQLException e) {
-            log.error("Error closing MySQL connection", e);
-        }
+        // Since we're creating new connections for each operation, we don't need to close a shared connection
+        log.info("MySQL connection management closed!");
     }
 
     public boolean isConnected() {
         try {
-            return connection != null && !connection.isClosed() && connection.isValid(1);
+            // Test the connection by creating and closing a temporary connection
+            try (Connection testConn = getConnection()) {
+                return testConn.isValid(1);
+            }
         } catch (SQLException e) {
             return false;
         }
     }
 
-    public Connection getConnection() {
-        return connection;
+        // This method returns a new connection each time, not a shared one
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(
+            String.format("jdbc:mysql://%s:%d/%s?useSSL=false&allowPublicKeyRetrieval=true", host, port, database), 
+            username, password
+        );
     }
 
     // Getters for data collections (simulating MongoDB collection access)
@@ -625,22 +753,33 @@ public class MySQL {
     
     public CompletableFuture<PlayerMailData> loadMailByUuid(UUID uuid) {
         return CompletableFuture.supplyAsync(() -> {
+            Connection conn = null;
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
             try {
+                conn = getConnection();
                 String sql = "SELECT mailData FROM mail WHERE uuid = ?";
-                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt = conn.prepareStatement(sql);
                 stmt.setString(1, uuid.toString());
                 
-                ResultSet rs = stmt.executeQuery();
+                rs = stmt.executeQuery();
                 if (rs.next()) {
                     String mailDataJson = rs.getString("mailData");
                     return objectMapper.readValue(mailDataJson, PlayerMailData.class);
                 }
                 
-                stmt.close();
                 return null;
             } catch (Exception e) {
                 log.error("Error loading mail by UUID: " + uuid, e);
                 return null;
+            } finally {
+                try {
+                    if (rs != null) rs.close();
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    log.warn("Error closing resources", e);
+                }
             }
         }, executor);
     }

@@ -10,7 +10,7 @@ import cn.charlotte.pit.enchantment.rarity.EnchantmentRarity;
 import cn.charlotte.pit.util.cooldown.Cooldown;
 import cn.charlotte.pit.util.time.TimeUtil;
 import lombok.Getter;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -57,7 +57,7 @@ public abstract class AbstractEnchantment {
         if (item == null || item.getType() == Material.AIR) {
             return -1;
         }
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         if (nmsItem == null) {
             return -1;
         }
@@ -94,19 +94,21 @@ public abstract class AbstractEnchantment {
 
 
     public boolean canApply(ItemStack item) {
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
-        if (nmsItem == null) return false;
-        Item itemType = nmsItem.getItem();
-        if (itemType instanceof ItemSword) {
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        if (nmsItem == null) {
+            return false;
+        }
+        Object itemType = nmsItem.getItem();
+        if (itemType instanceof net.minecraft.server.v1_12_R1.ItemSword) {
             return weaponOnly;
         }
-        if (itemType instanceof ItemBow) {
+        if (itemType instanceof net.minecraft.server.v1_12_R1.ItemBow) {
             return bowOnly;
         }
-        if (itemType instanceof ItemArmor) {
+        if (itemType instanceof net.minecraft.server.v1_12_R1.ItemArmor) {
             return armorOnly;
         }
-        if (itemType instanceof ItemFishingRod) {
+        if (itemType instanceof net.minecraft.server.v1_12_R1.ItemFishingRod) {
             return rodOnly;
         }
         return false;

@@ -859,7 +859,7 @@ public class PitAdminCommand {
             permissionNode = "pit.admin"
     )
     public void enchantment(Player player) {
-        player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1, 1);
+        player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
         ThePit.api.openMenu(player, "admin_enchant");
     }
 
@@ -885,7 +885,7 @@ public class PitAdminCommand {
             permissionNode = "pit.admin"
     )
     public void pitItem(Player player) {
-        player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1, 1);
+        player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
         ThePit.api.openMenu(player, "admin_item");
     }
 
@@ -894,7 +894,7 @@ public class PitAdminCommand {
             permissionNode = "pit.admin"
     )
     public void pitRuneItem(Player player) {
-        player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1, 1);
+        player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
         ThePit.api.openMenu(player, "rune_item");
     }
 

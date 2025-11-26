@@ -6,10 +6,10 @@ import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
-import net.minecraft.server.v1_8_R3.NBTBase;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagList;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import net.minecraft.server.v1_12_R1.NBTBase;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagList;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentMap;
 public class Attributes {
     private final NBTTagCompound parent;
     // This may be modified
-    public net.minecraft.server.v1_8_R3.ItemStack nmsStack;
+    public net.minecraft.server.v1_12_R1.ItemStack nmsStack;
     private NBTTagList attributes;
 
     public Attributes(ItemStack stack) {

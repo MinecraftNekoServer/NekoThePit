@@ -1,7 +1,7 @@
 package cn.charlotte.pit.util.item;
 
 import cn.charlotte.pit.UtilKt;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,7 +17,7 @@ public class ItemUtil {
         if (item == null || item.getType() == Material.AIR) {
             return null;
         }
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return null;
@@ -42,7 +42,7 @@ public class ItemUtil {
             return false;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return true;
@@ -60,7 +60,7 @@ public class ItemUtil {
             return false;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return false;
@@ -78,7 +78,7 @@ public class ItemUtil {
             return false;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return false;
@@ -96,7 +96,7 @@ public class ItemUtil {
             return false;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return false;
@@ -114,7 +114,7 @@ public class ItemUtil {
             return false;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return false;
@@ -132,7 +132,7 @@ public class ItemUtil {
             return false;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return false;
@@ -150,7 +150,7 @@ public class ItemUtil {
             return false;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return false;
@@ -168,7 +168,7 @@ public class ItemUtil {
             return false;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return false;
@@ -185,7 +185,7 @@ public class ItemUtil {
         if (item == null || item.getType() == Material.AIR) {
             return null;
         }
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return null;
@@ -207,7 +207,7 @@ public class ItemUtil {
             return null;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return null;
@@ -229,7 +229,7 @@ public class ItemUtil {
             return null;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             return null;

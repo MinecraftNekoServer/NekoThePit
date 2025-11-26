@@ -1,7 +1,6 @@
 package cn.charlotte.pit.entity.ai;
 
-import net.minecraft.server.v1_8_R3.*;
-import org.apache.commons.lang3.StringUtils;
+import net.minecraft.server.v1_12_R1.*;
 
 /**
  * @Author: EmptyIrony
@@ -32,28 +31,21 @@ public abstract class PathfinderGoalCustomTarget extends PathfinderGoal {
             return false;
         } else if (!var1.isAlive()) {
             return false;
-        } else if (!var0.a(var1.getClass())) {
-            return false;
         } else {
-            ScoreboardTeamBase var4 = var0.getScoreboardTeam();
-            ScoreboardTeamBase var5 = var1.getScoreboardTeam();
-            if (var4 != null && var5 == var4) {
-                return false;
-            } else {
-                if (var0 instanceof EntityOwnable && StringUtils.isNotEmpty(((EntityOwnable) var0).getOwnerUUID())) {
-                    if (var1 instanceof EntityOwnable && ((EntityOwnable) var0).getOwnerUUID().equals(((EntityOwnable) var1).getOwnerUUID())) {
-                        return false;
-                    }
-
-                    if (var1 == ((EntityOwnable) var0).getOwner()) {
-                        return false;
-                    }
-                } else if (var1 instanceof EntityHuman && !var2 && ((EntityHuman) var1).abilities.isInvulnerable) {
+            if (var0 instanceof EntityTameableAnimal && ((EntityTameableAnimal) var0).isTamed()) {
+                if (var1 instanceof EntityTameableAnimal && ((EntityTameableAnimal) var0).getOwner() != null && 
+                    ((EntityTameableAnimal) var0).getOwner().equals(((EntityTameableAnimal) var1).getOwner())) {
                     return false;
                 }
 
-                return !var3 || var0.getEntitySenses().a(var1);
+                if (var1 == ((EntityTameableAnimal) var0).getOwner()) {
+                    return false;
+                }
+            } else if (var1 instanceof EntityHuman && !var2 && ((EntityHuman) var1).abilities.isInvulnerable) {
+                return false;
             }
+
+            return !var3 || var0.getEntitySenses().a(var1);
         }
     }
 
@@ -65,27 +57,20 @@ public abstract class PathfinderGoalCustomTarget extends PathfinderGoal {
             return false;
         } else if (!var1.isAlive()) {
             return false;
+        }
+        double var4 = this.f();
+        if (this.e.h(var1) > var4 * var4) {
+            return false;
         } else {
-            ScoreboardTeamBase var2 = this.e.getScoreboardTeam();
-            ScoreboardTeamBase var3 = var1.getScoreboardTeam();
-            if (var2 != null && var3 == var2) {
-                return false;
-            } else {
-                double var4 = this.f();
-                if (this.e.h(var1) > var4 * var4) {
+            if (this.f) {
+                if (this.e.getEntitySenses().a(var1)) {
+                    this.d = 0;
+                } else if (++this.d > 60) {
                     return false;
-                } else {
-                    if (this.f) {
-                        if (this.e.getEntitySenses().a(var1)) {
-                            this.d = 0;
-                        } else if (++this.d > 60) {
-                            return false;
-                        }
-                    }
-
-                    return !(var1 instanceof EntityHuman) || !((EntityHuman) var1).abilities.isInvulnerable;
                 }
             }
+
+            return !(var1 instanceof EntityHuman) || !((EntityHuman) var1).abilities.isInvulnerable;
         }
     }
 
@@ -125,12 +110,12 @@ public abstract class PathfinderGoalCustomTarget extends PathfinderGoal {
     }
 
     private boolean a(EntityLiving var1) {
-        this.c = 10 + this.e.bc().nextInt(5);
+        this.c = 10 + this.e.getRandom().nextInt(5);
         PathEntity var2 = this.e.getNavigation().a(var1);
         if (var2 == null) {
             return false;
         } else {
-            PathPoint var3 = var2.c();
+            PathPoint var3 = var2.c(); // Method to get final path point in v1_12_R1
             if (var3 == null) {
                 return false;
             } else {

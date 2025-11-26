@@ -1,8 +1,8 @@
 package cn.charlotte.pit.util.chat;
 
-import net.minecraft.server.v1_8_R3.ChatComponentText;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import net.minecraft.server.v1_12_R1.ChatComponentText;
+import net.minecraft.server.v1_12_R1.PacketPlayOutTitle;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 /**

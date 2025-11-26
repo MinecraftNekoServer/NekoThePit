@@ -1,9 +1,9 @@
 package cn.charlotte.pit.util.chat;
 
 import cn.charlotte.pit.ThePit;
-import net.minecraft.server.v1_8_R3.ChatComponentText;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import net.minecraft.server.v1_12_R1.ChatComponentText;
+import net.minecraft.server.v1_12_R1.PacketPlayOutChat;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 /**
@@ -18,7 +18,7 @@ public class ActionBarUtil {
 
     public static void sendActionBar0(Player player, String message) {
         ChatComponentText components = new ChatComponentText(CC.translate(message));
-        PacketPlayOutChat packet = new PacketPlayOutChat(components, (byte) 2);
+        PacketPlayOutChat packet = new PacketPlayOutChat(components, net.minecraft.server.v1_12_R1.ChatMessageType.GAME_INFO);
 
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }

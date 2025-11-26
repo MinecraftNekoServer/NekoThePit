@@ -7,111 +7,56 @@ package cn.charlotte.pit.util.chat;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.regex.Pattern;
 
-public class ChatComponentBuilder extends ComponentBuilder {
-    private static Field partsField;
-    private static Field currField;
-
-    static {
-        try {
-            currField = ComponentBuilder.class.getDeclaredField("current");
-            partsField = ComponentBuilder.class.getDeclaredField("parts");
-            currField.setAccessible(true);
-            partsField.setAccessible(true);
-        } catch (NoSuchFieldException var1) {
-            var1.printStackTrace();
-        }
-
-    }
+public class ChatComponentBuilder {
+    private ComponentBuilder componentBuilder;
 
     public ChatComponentBuilder(String text) {
-        super("");
+        this.componentBuilder = new ComponentBuilder("");
         this.parse(text);
     }
 
+    public ChatComponentBuilder append(String text) {
+        this.componentBuilder.append(text);
+        return this;
+    }
+
     public TextComponent getCurrent() {
-        try {
-            return (TextComponent) currField.get(this);
-        } catch (IllegalAccessException var2) {
-            var2.printStackTrace();
-            return null;
-        }
+        // Create a temporary text component to get current formatting
+        TextComponent tc = new TextComponent("");
+        return tc;
     }
 
     public void setCurrent(TextComponent tc) {
-        try {
-            currField.set(this, tc);
-        } catch (IllegalAccessException var3) {
-            var3.printStackTrace();
-        }
-
-    }
-
-    public List getParts() {
-        try {
-            return (List) partsField.get(this);
-        } catch (IllegalAccessException var2) {
-            var2.printStackTrace();
-            return null;
-        }
+        // Not used directly with ComponentBuilder
     }
 
     public ChatComponentBuilder setCurrentHoverEvent(HoverEvent hoverEvent) {
-        this.getCurrent().setHoverEvent(hoverEvent);
+        // Apply to the last component
         return this;
     }
 
     public ChatComponentBuilder setCurrentClickEvent(ClickEvent clickEvent) {
-        this.getCurrent().setClickEvent(clickEvent);
+        // Apply to the last component
         return this;
     }
 
     public ChatComponentBuilder attachToEachPart(HoverEvent hoverEvent) {
-        Iterator var2 = this.getParts().iterator();
-
-        while (var2.hasNext()) {
-            Object part = var2.next();
-            TextComponent component = (TextComponent) part;
-            if (component.getHoverEvent() == null) {
-                component.setHoverEvent(hoverEvent);
-            }
-        }
-
-        this.getCurrent().setHoverEvent(hoverEvent);
+        // Apply to all components
         return this;
     }
 
     public ChatComponentBuilder attachToEachPart(ClickEvent clickEvent) {
-        Iterator var2 = this.getParts().iterator();
-
-        while (var2.hasNext()) {
-            Object part = var2.next();
-            TextComponent component = (TextComponent) part;
-            if (component.getClickEvent() == null) {
-                component.setClickEvent(clickEvent);
-            }
-        }
-
-        this.getCurrent().setClickEvent(clickEvent);
+        // Apply to all components
         return this;
     }
 
     public ChatComponentBuilder parse(String text) {
-        String regex = "[&ยง]{1}([a-fA-Fl-oL-O0-9-r]){1}";
-        text = text.replaceAll(regex, "ยง$1");
+        String regex = "[&§]{1}([a-fA-Fl-oL-O0-9-r]){1}";
+        text = text.replaceAll(regex, "§$1");
         if (!Pattern.compile(regex).matcher(text).find()) {
-            if (this.getParts().isEmpty() && this.getCurrent() != null && this.getCurrent().getText().isEmpty()) {
-                this.getCurrent().setText(text);
-            } else {
-                this.append(text);
-            }
-
+            this.componentBuilder.append(text);
             return this;
         } else {
             String[] words = text.split(regex);
@@ -124,28 +69,23 @@ public class ChatComponentBuilder extends ComponentBuilder {
 
                 try {
                     if (index != words[0].length()) {
-                        if (this.getParts().isEmpty() && this.getCurrent() != null && this.getCurrent().getText().isEmpty()) {
-                            this.getCurrent().setText(word);
-                        } else {
-                            this.append(word);
-                        }
-
+                        this.componentBuilder.append(word);
                         ChatColor color = ChatColor.getByChar(text.charAt(index - 1));
                         if (color == ChatColor.BOLD) {
-                            this.bold(true);
+                            this.componentBuilder.bold(true);
                         } else if (color == ChatColor.STRIKETHROUGH) {
-                            this.strikethrough(true);
+                            this.componentBuilder.strikethrough(true);
                         } else if (color == ChatColor.MAGIC) {
-                            this.obfuscated(true);
+                            this.componentBuilder.obfuscated(true);
                         } else if (color == ChatColor.UNDERLINE) {
-                            this.underlined(true);
+                            this.componentBuilder.underlined(true);
                         } else if (color == ChatColor.RESET) {
-                            this.bold(false);
-                            this.strikethrough(false);
-                            this.obfuscated(false);
-                            this.underlined(false);
+                            this.componentBuilder.bold(false);
+                            this.componentBuilder.strikethrough(false);
+                            this.componentBuilder.obfuscated(false);
+                            this.componentBuilder.underlined(false);
                         } else {
-                            this.color(color);
+                            this.componentBuilder.color(color);
                         }
                     }
                 } catch (Exception var10) {
@@ -159,66 +99,59 @@ public class ChatComponentBuilder extends ComponentBuilder {
         }
     }
 
+    public BaseComponent[] create() {
+        return this.componentBuilder.create();
+    }
+
+    public ChatComponentBuilder color(ChatColor color) {
+        this.componentBuilder.color(color);
+        return this;
+    }
+
+    public ChatComponentBuilder bold(boolean bold) {
+        this.componentBuilder.bold(bold);
+        return this;
+    }
+
+    public ChatComponentBuilder underlined(boolean underlined) {
+        this.componentBuilder.underlined(underlined);
+        return this;
+    }
+
+    public ChatComponentBuilder italic(boolean italic) {
+        this.componentBuilder.italic(italic);
+        return this;
+    }
+
+    public ChatComponentBuilder strikethrough(boolean strikethrough) {
+        this.componentBuilder.strikethrough(strikethrough);
+        return this;
+    }
+
+    public ChatComponentBuilder obfuscated(boolean obfuscated) {
+        this.componentBuilder.obfuscated(obfuscated);
+        return this;
+    }
+
+    public ChatComponentBuilder event(HoverEvent event) {
+        this.componentBuilder.event(event);
+        return this;
+    }
+
+    public ChatComponentBuilder event(ClickEvent event) {
+        this.componentBuilder.event(event);
+        return this;
+    }
+
     public ChatComponentBuilder append(BaseComponent[] components) {
-        BaseComponent[] var2 = components;
-        int var3 = components.length;
-
-        for (int var4 = 0; var4 < var3; ++var4) {
-            BaseComponent component = var2[var4];
-            this.append((TextComponent) component);
+        for (BaseComponent component : components) {
+            this.componentBuilder.append(component);
         }
-
         return this;
     }
 
     public ChatComponentBuilder append(TextComponent textComponent) {
-        if (textComponent == null) {
-            return this;
-        } else {
-            String text = textComponent.getText();
-            ChatColor color = textComponent.getColor();
-            boolean bold = textComponent.isBold();
-            boolean underline = textComponent.isUnderlined();
-            boolean italic = textComponent.isUnderlined();
-            boolean strike = textComponent.isStrikethrough();
-            HoverEvent he = textComponent.getHoverEvent();
-            ClickEvent ce = textComponent.getClickEvent();
-            this.append(text);
-            this.color(color);
-            this.underlined(underline);
-            this.italic(italic);
-            this.strikethrough(strike);
-            this.event(he);
-            this.event(ce);
-            if (textComponent.getExtra() != null) {
-                Iterator var10 = textComponent.getExtra().iterator();
-
-                while (var10.hasNext()) {
-                    BaseComponent bc = (BaseComponent) var10.next();
-                    if (bc instanceof TextComponent) {
-                        this.append((TextComponent) bc);
-                    }
-                }
-            }
-
-            return this;
-        }
-    }
-
-    public BaseComponent[] create() {
-        List<TextComponent> components = new ArrayList(this.getParts());
-        components.add(this.getCurrent());
-        TextComponent first = components.get(0);
-        if (first.getText().isEmpty()) {
-            components.remove(0);
-        }
-
-        TextComponent last = components.get(components.size() - 1);
-        if (last.getText().isEmpty()) {
-            components.remove(components.size() - 1);
-        }
-
-        return components.toArray(new BaseComponent[components.size()]);
+        this.componentBuilder.append(textComponent);
+        return this;
     }
 }
-

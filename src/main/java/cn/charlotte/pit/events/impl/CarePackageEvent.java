@@ -103,7 +103,7 @@ public class CarePackageEvent implements INormalEvent, IEvent, Listener, IScoreB
         }
         data.setNum(data.getNum() - 1);
 
-        chest.getWorld().playSound(chest, Sound.ZOMBIE_WOODBREAK, 0.5F, 1.5F);
+        chest.getWorld().playSound(chest, Sound.BLOCK_WOOD_BREAK, 0.5F, 1.5F);
 
         data.setLeft(!data.isLeft());
         Hologram hologram = data.getFirstHologram();

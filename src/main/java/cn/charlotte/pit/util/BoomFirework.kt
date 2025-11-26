@@ -1,17 +1,19 @@
 package cn.charlotte.pit.util
 
-import net.minecraft.server.v1_8_R3.EntityFireworks
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityStatus
-import net.minecraft.server.v1_8_R3.World
+import net.minecraft.server.v1_12_R1.EntityFireworks
+import net.minecraft.server.v1_12_R1.PacketPlayOutEntityStatus
+import net.minecraft.server.v1_12_R1.World
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 
 class BoomFirework(world: World) :
     EntityFireworks(world) {
 
     val players = Bukkit.getOnlinePlayers()
     var gone = false
-    override fun t_() {
+    
+    override fun B_() {
+        super.B_()
         if (gone) {
             die()
             return

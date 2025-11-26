@@ -8,14 +8,14 @@ import cn.charlotte.pit.parm.AutoRegister;
 import cn.charlotte.pit.util.chat.CC;
 import cn.charlotte.pit.util.cooldown.Cooldown;
 import cn.charlotte.pit.util.item.ItemUtil;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.Blocks;
-import net.minecraft.server.v1_8_R3.PacketPlayOutBlockAction;
+import net.minecraft.server.v1_12_R1.BlockPosition;
+import net.minecraft.server.v1_12_R1.Blocks;
+import net.minecraft.server.v1_12_R1.PacketPlayOutBlockAction;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -69,7 +69,7 @@ public class EnderChestListener implements Listener {
             final Location location = locationCache.remove(event.getPlayer().getUniqueId());
 
             if (location != null) {
-                ((Player) event.getPlayer()).playSound(event.getPlayer().getLocation(), Sound.CHEST_CLOSE, 1, 0.6F);
+                ((Player) event.getPlayer()).playSound(event.getPlayer().getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 0.6F);
 
                 BlockPosition pos = new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ());
                 PacketPlayOutBlockAction packet = new PacketPlayOutBlockAction(pos, Blocks.ENDER_CHEST, (byte) 1, (byte) 0);
@@ -129,7 +129,7 @@ public class EnderChestListener implements Listener {
             }
 
             profile.getEnderChest().openEnderChest(player);
-            player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1, 0.6F);
+            player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 0.6F);
 
             this.locationCache.put(player.getUniqueId(), location);
 

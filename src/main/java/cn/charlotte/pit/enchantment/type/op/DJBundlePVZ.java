@@ -10,7 +10,7 @@ import cn.charlotte.pit.util.music.NBSDecoder;
 import cn.charlotte.pit.util.music.PositionSongPlayer;
 import cn.charlotte.pit.util.music.Song;
 import lombok.SneakyThrows;
-import net.minecraft.server.v1_8_R3.PacketPlayInFlying;
+import net.minecraft.server.v1_12_R1.PacketPlayInFlying;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;

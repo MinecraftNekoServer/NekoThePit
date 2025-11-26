@@ -118,7 +118,7 @@ public class SpireEvent implements IEvent, IEpicEvent, Listener, IPrepareEvent, 
                     .getSpawnLocations()
                     .get(RandomUtil.random.nextInt(ThePit.getInstance().getPitConfig().getSpawnLocations().size()));
             player.teleport(location);
-            player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1, 0.5F);
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERDRAGON_GROWL, 1, 0.5F);
         }
 
         FaweAPI.getTaskManager().async(() -> {
@@ -302,7 +302,7 @@ public class SpireEvent implements IEvent, IEpicEvent, Listener, IPrepareEvent, 
             data.soul = data.soul + this.getKillRewardSouls(data);
             data.kills++;
             TitleUtil.sendTitle(killer, CC.translate("&a击杀!"), this.getFloorColor(data.floor) + "第" + (data.floor + 1) + "层", 5, 20, 10);
-            killer.playSound(killer.getLocation(), Sound.LEVEL_UP, 1, 1.5F);
+            killer.playSound(killer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1.5F);
 
             Bukkit.getScheduler().runTaskLater(ThePit.getInstance(), () -> {
                 int amount = InventoryUtil.getAmountOfItem(killer, "broken_soul");

@@ -1,6 +1,6 @@
 package spg.lgdev.handler;
 
-import net.minecraft.server.v1_8_R3.PacketPlayInFlying;
+import net.minecraft.server.v1_12_R1.PacketPlayInFlying;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

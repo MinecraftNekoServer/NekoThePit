@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.bukkit.Sound.BURP;
+//import static org.bukkit.Sound.BURP; // BURP sound doesn't exist in 1.12.2
 
 /**
  * @Author: EmptyIrony
@@ -226,7 +226,7 @@ public class EventFactory {
         this.activeEpicEvent = null;
         IEvent iEvent = (IEvent) event;
 
-        Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), BURP, 1, 0.72F));
+        Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), "ENTITY_PLAYER_BURP", 1, 0.72F));
         iEvent.onInactive();
     }
 

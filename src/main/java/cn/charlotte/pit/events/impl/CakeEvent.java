@@ -194,7 +194,7 @@ public class CakeEvent implements IEvent, INormalEvent, Listener {
                 profile.grindCoins(totalCoins);
                 profile.setCoins(profile.getCoins() + totalCoins);
 
-                player.playSound(player.getLocation(), Sound.EAT, 1, 1);
+                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
 
                 CC.send(MessageType.EVENT, player, "&d&l蛋糕! &6+" + totalCoins + "金币 &d" + cakePlayerData.clicked + "次吃蛋糕" + " &6(" + numFormatTwo.format(cakePlayerData.coins) + "金币在这次事件中)");
 
@@ -210,7 +210,7 @@ public class CakeEvent implements IEvent, INormalEvent, Listener {
                     profile.grindCoins(totalCoins);
                     profile.setCoins(profile.getCoins() + totalCoins);
 
-                    player.playSound(player.getLocation(), Sound.EAT, 1, 1);
+                    player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
 
                     CC.send(MessageType.EVENT, player, "&d&l蛋糕! &7吃下了 &c樱桃 &6+20金币&7!");
                 } else if (data == 15) {
@@ -223,7 +223,7 @@ public class CakeEvent implements IEvent, INormalEvent, Listener {
                     profile.setExperience(profile.getExperience() + totalXp);
                     profile.applyExperienceToPlayer(player);
 
-                    player.playSound(player.getLocation(), Sound.EAT, 1, 1);
+                    player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
 
                     CC.send(MessageType.EVENT, player, "&d&l蛋糕! &7吃下了 &4巧克力 &b+20经验&7!");
                 }

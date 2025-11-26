@@ -110,16 +110,11 @@ abstract class CraftHologram implements Hologram {
                 PacketPlayOutSpawnEntityLivingFieldResolver.resolveByFirstType(NMSClass.DataWatcher)
         ).get(this.spawnPacketArmorStand);
 
-        final net.minecraft.server.v1_8_R3.DataWatcher watcher = (net.minecraft.server.v1_8_R3.DataWatcher) dataWatcherArmorStand;
+        final net.minecraft.server.v1_12_R1.DataWatcher watcher = (net.minecraft.server.v1_12_R1.DataWatcher) dataWatcherArmorStand;
 
         //设置盔甲架无法交互
-        byte b0 = watcher.getByte(10);
-        if (!isTouchable()) {
-            b0 = (byte)(b0 | 16);
-        } else {
-            b0 &= -17;
-        }
-        watcher.watch(10, b0);
+        Byte b0 = (Byte) watcher.get(net.minecraft.server.v1_12_R1.DataWatcherRegistry.a.a(10));
+        watcher.set(net.minecraft.server.v1_12_R1.DataWatcherRegistry.a.a(10), b0);
 
         this.dataWatcherArmorStand = watcher;
 

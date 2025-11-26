@@ -33,13 +33,13 @@ import cn.charlotte.pit.util.random.RandomUtil;
 import cn.charlotte.pit.util.time.TimeUtil;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Material;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
@@ -186,7 +186,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
 
         ItemStack stack = event.getItem().getItemStack();
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(stack);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(stack);
 
         if (nmsItem.getItem() instanceof ItemArmor) {
             if (ItemUtil.getInternalName(stack) == null) {
@@ -231,7 +231,7 @@ public class PlayerListener implements Listener {
                 armorContents[slot] = itemStack;
                 player.getInventory().setArmorContents(armorContents);
 
-                player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1F, 1F);
+                player.playSound(player.getLocation(), Sound.ENTITY_HORSE_ARMOR, 1F, 1F);
             } else if (itemStack.getType().name().contains("DIAMOND")) {
                 final String internalName1 = ItemUtil.getInternalName(armorContents[slot]);
                 if (internalName1 != null && (internalName1.equalsIgnoreCase("mythic_leggings") || internalName1.equals("armageddon_boots") || internalName1.equals("angel_chestplate") || internalName1.equals("kings_helmet"))) {
@@ -244,12 +244,12 @@ public class PlayerListener implements Listener {
 
                 armorContents[slot] = itemStack;
                 player.getInventory().setArmorContents(armorContents);
-                player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1F, 1F);
+                player.playSound(player.getLocation(), Sound.ENTITY_HORSE_ARMOR, 1F, 1F);
             }
         } else if (stack.getType() == Material.ARROW) {
             ItemBuilder arrowBuilder = new ItemBuilder(Material.ARROW).internalName("default_arrow").defaultItem().canDrop(false).canSaveToEnderChest(false);
             player.getInventory().addItem(arrowBuilder.build());
-            player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 1F, 1F);
+            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1F, 1F);
         } else if ((stack.getType() == Material.BOW || CraftItemStack.asNMSCopy(stack).getItem() instanceof ItemSword) && !event.isCancelled()) {
             InventoryUtil.addInvReverse(player.getInventory(), event.getItem().getItemStack());
         } else if (stack.getType() == Material.GOLD_INGOT) {
@@ -275,7 +275,7 @@ public class PlayerListener implements Listener {
 
                 profile.setGoldPicked(profile.getGoldPicked() + 1);
                 player.sendMessage(CC.translate("&6&l捡起硬币! &7从地上找到了&6 " + gold + " &7硬币!"));
-                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1.8F);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1.8F);
             }
         } else if (ThePit.mode == Mode.Normal) {
             player.getInventory().addItem(stack);
@@ -292,7 +292,7 @@ public class PlayerListener implements Listener {
                 PerkData data = profile.getUnlockedPerkMap().get("Mythicism");
                 if (data != null) {
                     ThePit.getApi().openMythicWellMenu(event.getPlayer());
-                    event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.CHICKEN_EGG_POP, 1, 0.9F);
+                    event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 0.9F);
                     return;
                 }
                 event.getPlayer().sendMessage(CC.translate("&c你需要达到 " + LevelUtil.getLevelTag(0, 120) + " &c解锁精通玩法并解锁精通天赋 &6神话附魔师 &c以使用神话之井!"));
@@ -322,7 +322,7 @@ public class PlayerListener implements Listener {
                 e.setUseItemInHand(Event.Result.DENY);
                 return;
             }
-            player.playSound(player.getLocation(), Sound.EAT, 1F, 1F);
+            player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1F, 1F);
             goldenAppleCooldown.put(player.getUniqueId(), System.currentTimeMillis());
             PlayerUtil.takeOneItemInHand(player);
             player.removePotionEffect(PotionEffectType.SPEED);
@@ -341,7 +341,7 @@ public class PlayerListener implements Listener {
                     e.setUseItemInHand(Event.Result.DENY);
                     return;
                 }
-                player.playSound(player.getLocation(), Sound.EAT, 1F, 1F);
+                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1F, 1F);
                 goldenAppleCooldown.put(player.getUniqueId(), System.currentTimeMillis());
                 PlayerUtil.takeOneItemInHand(player);
                 player.removePotionEffect(PotionEffectType.REGENERATION);
@@ -355,7 +355,7 @@ public class PlayerListener implements Listener {
                     e.setUseItemInHand(Event.Result.DENY);
                     return;
                 }
-                player.playSound(player.getLocation(), Sound.EAT, 1F, 1F);
+                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1F, 1F);
                 goldenAppleCooldown.put(player.getUniqueId(), System.currentTimeMillis());
                 PlayerUtil.takeOneItemInHand(player);
                 PlayerUtil.heal(player, 8);
@@ -372,7 +372,7 @@ public class PlayerListener implements Listener {
                     e.getPlayer().sendMessage(CC.translate("&c在再次使用此物品前,请等待" + TimeUtil.millisToRoundedTime(cooldown.getRemaining()).replace(" ", "") + "!"));
                     return;
                 }
-                player.playSound(player.getLocation(), Sound.EAT, 1F, 1F);
+                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1F, 1F);
                 firstAidEggCooldown.put(player.getUniqueId(), new Cooldown(30, TimeUnit.SECONDS));
                 player.removePotionEffect(PotionEffectType.SPEED);
                 PlayerUtil.heal(player, 5);
@@ -384,7 +384,7 @@ public class PlayerListener implements Listener {
                     e.setUseItemInHand(Event.Result.DENY);
                     return;
                 }
-                player.playSound(player.getLocation(), Sound.EAT, 1F, 1F);
+                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1F, 1F);
                 goldenAppleCooldown.put(player.getUniqueId(), System.currentTimeMillis());
                 PlayerUtil.takeOneItemInHand(player);
                 PlayerUtil.heal(player, 2);
@@ -398,7 +398,7 @@ public class PlayerListener implements Listener {
                     e.setUseItemInHand(Event.Result.DENY);
                     return;
                 }
-                player.playSound(player.getLocation(), Sound.EAT, 1F, 1F);
+                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1F, 1F);
                 goldenAppleCooldown.put(player.getUniqueId(), System.currentTimeMillis());
                 PlayerUtil.takeOneItemInHand(player);
                 player.removePotionEffect(PotionEffectType.REGENERATION);
@@ -436,7 +436,7 @@ public class PlayerListener implements Listener {
                 PlayerUtil.takeOneItemInHand(e.getPlayer());
                 e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 20, 0));
                 e.getPlayer().sendMessage(CC.translate("&f牛奶! &7你喝下了牛奶"));
-                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.DRINK, 1f, 1f);
+                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_GENERIC_DRINK, 1f, 1f);
             }
         }
     }
@@ -448,7 +448,7 @@ public class PlayerListener implements Listener {
         if (event.getItem() != null && event.getItem().getType() == Material.GOLDEN_APPLE) {
             (((CraftPlayer) event.getPlayer()).getHandle()).setAbsorptionHearts(8.0F);
             PlayerUtil.takeOneItemInHand(player);
-            player.playSound(player.getLocation(), Sound.EAT, 1F, 1F);
+            player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1F, 1F);
             player.removePotionEffect(PotionEffectType.REGENERATION);
             player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1), true);
             if (PlayerUtil.isPlayerUnlockedPerk(player, "yummy_perk")) {
@@ -462,7 +462,7 @@ public class PlayerListener implements Listener {
         if (event.getItem() != null && "perk_olympus".equals(ItemUtil.getInternalName(event.getItem()))) {
             PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
             PlayerUtil.takeOneItemInHand(player);
-            player.playSound(player.getLocation(), Sound.EAT, 1F, 1F);
+            player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1F, 1F);
             player.removePotionEffect(PotionEffectType.REGENERATION);
             player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 10 * 20, 2), true);
             player.removePotionEffect(PotionEffectType.SPEED);
@@ -642,7 +642,7 @@ public class PlayerListener implements Listener {
                 int blockY = location.getBlockY();
                 int blockZ = location.getBlockZ();
 
-                EntityFallingBlock fallingBlock = new EntityFallingBlock(world, blockX, blockY, blockZ, net.minecraft.server.v1_8_R3.Block.getById(b.getTypeId()).fromLegacyData(0));
+                EntityFallingBlock fallingBlock = new EntityFallingBlock(world, blockX, blockY, blockZ, net.minecraft.server.v1_12_R1.Block.getById(b.getTypeId()).fromLegacyData(0));
                 fallingBlock.motX = x;
                 fallingBlock.motY = y;
                 fallingBlock.motZ = z;
@@ -650,7 +650,7 @@ public class PlayerListener implements Listener {
 
                 fallingBlocks.add(fallingBlock);
 
-                PacketPlayOutSpawnEntity spawnPacket = new PacketPlayOutSpawnEntity(fallingBlock, 70, net.minecraft.server.v1_8_R3.Block.getCombinedId(fallingBlock.getBlock()));
+                PacketPlayOutSpawnEntity spawnPacket = new PacketPlayOutSpawnEntity(fallingBlock, 70, net.minecraft.server.v1_12_R1.Block.getCombinedId(fallingBlock.getBlock()));
                 PacketPlayOutEntityVelocity vectorPacket = new PacketPlayOutEntityVelocity(fallingBlock);
 
 

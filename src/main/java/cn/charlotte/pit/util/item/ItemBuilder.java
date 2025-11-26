@@ -10,11 +10,11 @@ import cn.charlotte.pit.data.sub.EnchantmentRecord;
 import cn.charlotte.pit.enchantment.AbstractEnchantment;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -259,7 +259,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder changeNbt(String key, String value) {
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             tag = new NBTTagCompound();
@@ -279,7 +279,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder changeNbt(String key, boolean value) {
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             tag = new NBTTagCompound();
@@ -299,7 +299,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder changeNbt(String key, int value) {
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             tag = new NBTTagCompound();
@@ -319,7 +319,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder changeNbt(String key, double value) {
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             tag = new NBTTagCompound();
@@ -340,7 +340,7 @@ public class ItemBuilder {
 
     public ItemStack buildWithUnbreakable() {
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             tag = new NBTTagCompound();
@@ -376,7 +376,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder enchant(Map<AbstractEnchantment, Integer> enchant) {
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             tag = new NBTTagCompound();
@@ -419,7 +419,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder itemDamage(double damageValue) {
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(is);
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {
             tag = new NBTTagCompound();

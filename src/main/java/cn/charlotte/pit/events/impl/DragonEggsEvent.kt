@@ -64,7 +64,7 @@ class DragonEggsEvent : IEvent, INormalEvent, Listener {
         registerEvents()
         broadcastMessage("&5&l龙蛋！ &d龙蛋已在中心点位刷新,请前往点击！")
         setEggLocation(eggLocation!!)
-        playSoundToPlayers(Sound.ENDERDRAGON_GROWL, 1.5f, 1.5f)
+        playSoundToPlayers(Sound.ENTITY_ENDERDRAGON_GROWL, 1.5f, 1.5f)
         scheduleEventDeactivation()
     }
 
@@ -127,7 +127,7 @@ class DragonEggsEvent : IEvent, INormalEvent, Listener {
             profile.experience += exp.toDouble()
         }
 
-        player.playSound(player.location, Sound.CLICK, 1.5f, 1.5f)
+        player.playSound(player.location, Sound.BLOCK_DISPENSER_DISPENSE, 1.5f, 1.5f)
         player.sendMessage("&5&l龙蛋！ &7点击龙蛋 获得 &e$coins &6金币 &e$exp &b经验&7")
         clicks++
         updateHolograms()
@@ -145,7 +145,7 @@ class DragonEggsEvent : IEvent, INormalEvent, Listener {
         prepareLocation()
         eggLocation?.let { setEggLocation(findRandomLocation(it)) }
         broadcastMessage("&5&l龙蛋！ &7龙蛋已被移动到了新的位置！")
-        playSoundToPlayers(Sound.ENDERDRAGON_HIT, 1.5f, 1.5f)
+        playSoundToPlayers(Sound.ENTITY_ENDERDRAGON_HURT, 1.5f, 1.5f)
         isClickable = true
     }
 
@@ -193,7 +193,7 @@ class DragonEggsEvent : IEvent, INormalEvent, Listener {
     override fun onInactive() {
         unregisterEvents()
         cleanup()
-        playSoundToPlayers(Sound.ENDERDRAGON_DEATH, 1.5f, 1.5f)
+        playSoundToPlayers(Sound.ENTITY_ENDERDRAGON_DEATH, 1.5f, 1.5f)
         broadcastMessage("&5&l龙蛋！ &7活动已结束！")
     }
 

@@ -72,7 +72,7 @@ public class MultiExchangeLocationEnchant extends AbstractEnchantment implements
             final Player player = players.get(i);
             final Location location = locations.get(i);
 
-            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
             player.sendMessage(CC.translate("&5你被卷入到了时空漩涡之中...更替了你的位置"));
             player.teleport(location);
         }

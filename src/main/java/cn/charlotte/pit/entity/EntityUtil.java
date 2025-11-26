@@ -3,7 +3,7 @@ package cn.charlotte.pit.entity;
 import cn.charlotte.pit.entity.ai.PathfinderGoalFollow;
 import cn.charlotte.pit.entity.ai.PathfinderGoalOwnerHurt;
 import cn.charlotte.pit.entity.ai.PathfinderGoalTargetOwner;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 
 import java.lang.reflect.Field;
 import java.util.List;

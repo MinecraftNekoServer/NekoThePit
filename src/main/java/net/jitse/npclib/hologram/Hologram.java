@@ -8,7 +8,7 @@ import com.comphenix.tinyprotocol.Reflection;
 import net.jitse.npclib.internal.MinecraftVersion;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 
@@ -105,7 +105,7 @@ public class Hologram {
                 Reflection.getMethod(ENTITY_CLASS, "setNoGravity", boolean.class) :
                 Reflection.getMethod(ENTITY_ARMOR_STAND_CLASS, "setGravity", boolean.class));
 
-        Reflection.MethodInvoker SET_MARKER_METHOD = (version.isAboveOrEqual(MinecraftVersion.V1_8_R3) ?
+        Reflection.MethodInvoker SET_MARKER_METHOD = (version.isAboveOrEqual(MinecraftVersion.V1_9_R1) ?
                 Reflection.getMethod(BUKKIT_ENTITY_ARMOR_STAND_CLASS,
                         "setMarker", boolean.class) : null);
 

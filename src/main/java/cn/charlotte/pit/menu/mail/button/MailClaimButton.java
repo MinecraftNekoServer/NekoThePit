@@ -100,7 +100,7 @@ public class MailClaimButton extends Button {
 
                 mainMenu.setClosedByMenu(true);
                 mainMenu.openMenu(player);
-                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1, 1);
             } catch (Exception e) {
                 CC.printErrorWithCode(player, e);
             }
@@ -109,12 +109,12 @@ public class MailClaimButton extends Button {
         if (clickType != ClickType.LEFT) return;
         if (mail.isClaimed()) {
             player.sendMessage(CC.translate("&c此邮件已被领取!"));
-            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
             return;
         }
         if (mail.getExpireTime() < System.currentTimeMillis()) {
             player.sendMessage(CC.translate("&c此邮件已过期!"));
-            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
             return;
         }
 
@@ -123,7 +123,7 @@ public class MailClaimButton extends Button {
             final int slots = InventoryUtil.getInventoryEmptySlots(player.getInventory().getContents());
             if (slots < mailSlots) {
                 player.sendMessage(CC.translate("&c你的背包空间不足,无法领取此邮件!"));
-                player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
                 return;
             }
         }
@@ -151,7 +151,7 @@ public class MailClaimButton extends Button {
                         mainMenu.setClosedByMenu(true);
                         mainMenu.openMenu(player);
 
-                        player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                         player.sendMessage(CC.translate("&a领取成功!"));
                     } catch (Exception e) {
                         CC.printErrorWithCode(player, e);

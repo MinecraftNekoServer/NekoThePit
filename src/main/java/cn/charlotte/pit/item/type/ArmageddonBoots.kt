@@ -4,7 +4,7 @@ import cn.charlotte.pit.item.IMythicItem
 import cn.charlotte.pit.util.item.ItemBuilder
 import org.bukkit.Color
 import org.bukkit.Material
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.inventory.ItemStack
 
 class ArmageddonBoots : IMythicItem() {

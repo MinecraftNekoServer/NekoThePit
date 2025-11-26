@@ -6,12 +6,12 @@ import cn.charlotte.pit.enchantment.rarity.EnchantmentRarity;
 import cn.charlotte.pit.parm.listener.IPlayerShootEntity;
 import cn.charlotte.pit.util.cooldown.Cooldown;
 import com.google.common.util.concurrent.AtomicDouble;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
+import net.minecraft.server.v1_12_R1.BlockPosition;
+import net.minecraft.server.v1_12_R1.PacketPlayOutWorldEvent;
+import net.minecraft.server.v1_12_R1.PlayerConnection;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -60,7 +60,7 @@ public class JudgmentShot extends AbstractEnchantment implements IPlayerShootEnt
         if (targetPlayer.getHealth() - damage * boostDamage.get() < (1.5 + (enchantLevel * 0.5))) {
             cancel.set(true);
             targetPlayer.damage(9999);
-            attacker.playSound(attacker.getLocation(), Sound.VILLAGER_DEATH, 1, 1F);
+            attacker.playSound(attacker.getLocation(), Sound.ENTITY_VILLAGER_DEATH, 1, 1F);
 
             Location deathLoc = target.getLocation();
             PacketPlayOutWorldEvent packetA = new PacketPlayOutWorldEvent(2001, new BlockPosition(deathLoc.getBlockX(), deathLoc.getBlockY(), deathLoc.getBlockZ()), 152, false);

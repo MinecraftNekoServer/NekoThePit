@@ -104,7 +104,7 @@ class EnchantChoseButton(
         }
 
         player.closeInventory()
-        player.playSound(player.location, Sound.ANVIL_USE, 1.5f, 1.5f)
+                    player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 0.7f, 1f)
         player.sendMessage(CC.translate("&a使用成功!"))
         player.inventory.forEachIndexed { index, itemStack ->
             val internalName = ItemUtil.getInternalName(itemStack)

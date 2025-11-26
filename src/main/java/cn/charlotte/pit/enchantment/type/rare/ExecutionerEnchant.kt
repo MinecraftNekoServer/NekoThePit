@@ -9,10 +9,10 @@ import cn.charlotte.pit.parm.listener.IAttackEntity
 import cn.charlotte.pit.util.PlayerUtil
 import cn.charlotte.pit.util.cooldown.Cooldown
 import com.google.common.util.concurrent.AtomicDouble
-import net.minecraft.server.v1_8_R3.BlockPosition
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent
+import net.minecraft.server.v1_12_R1.BlockPosition
+import net.minecraft.server.v1_12_R1.PacketPlayOutWorldEvent
 import org.bukkit.Sound
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import java.util.concurrent.atomic.AtomicBoolean
@@ -71,7 +71,7 @@ class ExecutionerEnchant : AbstractEnchantment(), IAttackEntity {
         if (targetPlayer.health - damage * boostDamage.get() < enchantLevel + 1) {
             cancel.set(true)
             finalDamage.getAndAdd(2000.0)
-            attacker.playSound(attacker.location, Sound.VILLAGER_DEATH, 1f, 0.5f)
+                                        attacker.playSound(attacker.location, Sound.ENTITY_VILLAGER_DEATH, 1f, 1f)
             val deathLoc = target.getLocation()
             val packetA = PacketPlayOutWorldEvent(
                 2001,

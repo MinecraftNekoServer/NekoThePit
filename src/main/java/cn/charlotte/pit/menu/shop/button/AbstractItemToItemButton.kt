@@ -46,10 +46,10 @@ abstract class AbstractItemToItemButton : Button() {
             costItems(player)
             player.inventory.addItem(*getResultItem(player))
             player.sendMessage(CC.translate("&a购买成功!"))
-            player.playSound(player.location, Sound.NOTE_PLING, 1f, 1f)
+                        player.playSound(player.location, Sound.BLOCK_NOTE_HARP, 1f, 0.5f)
         } else {
             player.sendMessage(CC.translate("&c你的材料不足!"))
-            player.playSound(player.location, Sound.ENDERMAN_TELEPORT, 1f, 1f)
+            player.playSound(player.location, Sound.ENTITY_ENDERMEN_TELEPORT, 1f, 1f)
         }
     }
 }

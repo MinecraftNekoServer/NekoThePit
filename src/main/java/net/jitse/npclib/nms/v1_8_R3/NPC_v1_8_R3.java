@@ -13,12 +13,12 @@ import net.jitse.npclib.api.state.NPCSlot;
 import net.jitse.npclib.hologram.Hologram;
 import net.jitse.npclib.internal.MinecraftVersion;
 import net.jitse.npclib.internal.NPCBase;
-import net.jitse.npclib.nms.v1_8_R3.packets.*;
-import net.minecraft.server.v1_8_R3.*;
+import net.jitse.npclib.nms.v1_12_R1.packets.*;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -44,7 +44,7 @@ public class NPC_v1_8_R3 extends NPCBase {
     public Hologram getHologram(Player player) {
         Hologram holo = super.getHologram(player);
         if (holo == null) {
-            holo = new Hologram(MinecraftVersion.V1_8_R3, location.clone().add(0, 0.5, 0), getText(player));
+            holo = new Hologram(MinecraftVersion.V1_9_R1, location.clone().add(0, 0.5, 0), getText(player));
         }
         super.playerHologram.put(player.getUniqueId(), holo);
         return holo;
@@ -128,7 +128,18 @@ public class NPC_v1_8_R3 extends NPCBase {
 
         ItemStack item = getItem(slot);
 
-        PacketPlayOutEntityEquipment packet = new PacketPlayOutEntityEquipment(entityId, slot.getSlot(), CraftItemStack.asNMSCopy(item));
+        // Use v1_12_R1 EnumItemSlot since we're in a v1_12_R1 environment
+        net.minecraft.server.v1_12_R1.EnumItemSlot enumSlot;
+        switch (slot.getSlot()) {
+            case 0: enumSlot = net.minecraft.server.v1_12_R1.EnumItemSlot.MAINHAND; break;
+            case 1: enumSlot = net.minecraft.server.v1_12_R1.EnumItemSlot.HEAD; break;
+            case 2: enumSlot = net.minecraft.server.v1_12_R1.EnumItemSlot.CHEST; break;
+            case 3: enumSlot = net.minecraft.server.v1_12_R1.EnumItemSlot.LEGS; break;
+            case 4: enumSlot = net.minecraft.server.v1_12_R1.EnumItemSlot.FEET; break;
+            case 5: enumSlot = net.minecraft.server.v1_12_R1.EnumItemSlot.OFFHAND; break;
+            default: enumSlot = net.minecraft.server.v1_12_R1.EnumItemSlot.MAINHAND; break;
+        }
+        PacketPlayOutEntityEquipment packet = new PacketPlayOutEntityEquipment(entityId, enumSlot, CraftItemStack.asNMSCopy(item));
         playerConnection.sendPacket(packet);
     }
 

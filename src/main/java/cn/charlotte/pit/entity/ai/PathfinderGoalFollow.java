@@ -1,7 +1,7 @@
 package cn.charlotte.pit.entity.ai;
 
 import cn.charlotte.pit.entity.CustomOwnableEntity;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 
 /**
  * @Author: EmptyIrony
@@ -46,18 +46,18 @@ public class PathfinderGoalFollow extends PathfinderGoal {
     }
 
     public boolean b() {
-        return !this.g.m() && this.self.getCreature().h(this.e) > (double) (this.b * this.b);
+        return !((Navigation) this.g).o() && this.self.getCreature().h(this.e) > (double) (this.b * this.b);
     }
 
     public void c() {
         this.h = 0;
-        this.i = ((Navigation) this.self.getCreature().getNavigation()).e();
+        this.i = ((Navigation) this.self.getCreature().getNavigation()).o();
 //        this.self.getCreature().getNavigation().a(false);
     }
 
     public void d() {
         this.e = null;
-        this.g.n();
+        ((Navigation) this.g).p();
 //        this.self.getCreature().getNavigation().a(true);
     }
 
@@ -72,19 +72,19 @@ public class PathfinderGoalFollow extends PathfinderGoal {
     }
 
     public void e() {
-        this.self.getCreature().getControllerLook().a(this.e, 10.0F, (float) this.self.getCreature().bQ());
+        this.self.getCreature().getControllerLook().a(this.e, 10.0F, (float) this.self.getCreature().getHeadRotation());
         if (--this.h <= 0) {
             this.h = 10;
-            if (!this.g.a(this.e, this.f) && !this.self.getCreature().cc() && this.self.getCreature().h(this.e) >= 144.0D) {
+            if (!this.g.a(this.e, this.f) && !this.self.getCreature().isNoAI() && this.self.getCreature().h(this.e) >= 144.0D) {
                 int var1 = MathHelper.floor(this.e.locX) - 2;
                 int var2 = MathHelper.floor(this.e.locZ) - 2;
                 int var3 = MathHelper.floor(this.e.getBoundingBox().b);
 
                 for (int var4 = 0; var4 <= 4; ++var4) {
                     for (int var5 = 0; var5 <= 4; ++var5) {
-                        if ((var4 < 1 || var5 < 1 || var4 > 3 || var5 > 3) && World.a(this.a, new BlockPosition(var1 + var4, var3 - 1, var2 + var5)) && this.a(new BlockPosition(var1 + var4, var3, var2 + var5)) && this.a(new BlockPosition(var1 + var4, var3 + 1, var2 + var5))) {
+                        if ((var4 < 1 || var5 < 1 || var4 > 3 || var5 > 3) && this.a.getType(new BlockPosition(var1 + var4, var3 - 1, var2 + var5)).getBlock().a(this.a, new BlockPosition(var1 + var4, var3 - 1, var2 + var5)) && this.a(new BlockPosition(var1 + var4, var3, var2 + var5)) && this.a(new BlockPosition(var1 + var4, var3 + 1, var2 + var5))) {
                             this.self.getCreature().setPositionRotation((float) (var1 + var4) + 0.5F, var3, (float) (var2 + var5) + 0.5F, this.self.getCreature().yaw, this.self.getCreature().pitch);
-                            this.g.n();
+                            ((Navigation) this.g).p();
                             return;
                         }
                     }

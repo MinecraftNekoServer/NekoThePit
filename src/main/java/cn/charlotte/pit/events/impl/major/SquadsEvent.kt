@@ -12,11 +12,11 @@ import cn.charlotte.pit.util.PlayerUtil
 import cn.charlotte.pit.util.chat.CC
 import cn.charlotte.pit.util.cooldown.Cooldown
 import cn.charlotte.pit.util.time.TimeUtil
-import net.minecraft.server.v1_8_R3.EnumParticle
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles
+import net.minecraft.server.v1_12_R1.EnumParticle
+import net.minecraft.server.v1_12_R1.PacketPlayOutWorldParticles
 import org.bukkit.*
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.entity.Firework
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -483,9 +483,11 @@ class SquadsEvent : IEpicEvent, IEvent, IPrepareEvent, Listener, IScoreBoardInse
                                 .build()
                         )
                         (firework.bukkitEntity as Firework).fireworkMeta = meta
-                        firework.setPosition(location.x, location.y, location.z)
+                        firework.locX = location.x
+                        firework.locY = location.y
+                        firework.locZ = location.z
                         if ((location.world as CraftWorld).handle.addEntity(firework)) {
-                            firework.isInvisible = true
+                            firework.setInvisible(true)
                         }
                     }
                 }

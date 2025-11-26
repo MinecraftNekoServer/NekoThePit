@@ -16,12 +16,12 @@ import cn.charlotte.pit.util.command.CommandData;
 import cn.charlotte.pit.util.inventory.InventoryUtil;
 import cn.charlotte.pit.util.item.ItemUtil;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Material;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -101,7 +101,7 @@ public class PlayerUtil {
 
     public static boolean isCritical(Player player) {
         final EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-        return entityPlayer.fallDistance > 0.0F && !entityPlayer.onGround && !entityPlayer.k_() && !entityPlayer.V() && !entityPlayer.hasEffect(MobEffectList.BLINDNESS) && entityPlayer.vehicle == null;
+        return entityPlayer.fallDistance > 0.0F && !entityPlayer.onGround && !entityPlayer.isSprinting() && !entityPlayer.isInWater() && !entityPlayer.hasEffect(MobEffects.BLINDNESS) && entityPlayer.getVehicle() == null;
     }
 
     //如果自身穿着黑裤/被毒则无法使用附魔 (适用于无目标附魔)
@@ -427,7 +427,7 @@ public class PlayerUtil {
         player.setGameMode(GameMode.SURVIVAL);
         player.getActivePotionEffects().stream().map(PotionEffect::getType).forEach(player::removePotionEffect);
         EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-        entityPlayer.getDataWatcher().watch(9, (byte) 0);
+        entityPlayer.getDataWatcher().set(net.minecraft.server.v1_12_R1.DataWatcherRegistry.a.a(9), (byte) 0);
         entityPlayer.setAbsorptionHearts(0.0F);
 
         //apply stats - start
@@ -466,12 +466,18 @@ public class PlayerUtil {
 
     public static void lightningEffect(Player player, Player target) {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutSpawnEntityWeather(new EntityLightning(((CraftPlayer) target).getHandle().getWorld(), target.getLocation().getX(), target.getLocation().getY(), target.getLocation().getZ(), true, false)));
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedSoundEffect("ambient.weather.thunder", target.getLocation().getX(), target.getLocation().getY(), target.getLocation().getZ(), 100F, 100));
+        net.minecraft.server.v1_12_R1.MinecraftKey key = new net.minecraft.server.v1_12_R1.MinecraftKey("ambient.weather.thunder");
+        net.minecraft.server.v1_12_R1.SoundEffect se = net.minecraft.server.v1_12_R1.SoundEffect.a.get(key);
+        if (se == null) se = new net.minecraft.server.v1_12_R1.SoundEffect(key);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedSoundEffect(se, net.minecraft.server.v1_12_R1.SoundCategory.WEATHER, target.getLocation().getX(), target.getLocation().getY(), target.getLocation().getZ(), 100F, 1F));
     }
 
     public static void lightningEffect(Player player) {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutSpawnEntityWeather(new EntityLightning(((CraftPlayer) player).getHandle().getWorld(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), true, false)));
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedSoundEffect("ambient.weather.thunder", player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 1.0F, 63));
+        net.minecraft.server.v1_12_R1.MinecraftKey key2 = new net.minecraft.server.v1_12_R1.MinecraftKey("ambient.weather.thunder");
+        net.minecraft.server.v1_12_R1.SoundEffect se2 = net.minecraft.server.v1_12_R1.SoundEffect.a.get(key2);
+        if (se2 == null) se2 = new net.minecraft.server.v1_12_R1.SoundEffect(key2);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedSoundEffect(se2, net.minecraft.server.v1_12_R1.SoundCategory.WEATHER, player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 1.0F, 1F));
     }
 
     public static void sendFirework(FireworkEffect effect, Location location) {

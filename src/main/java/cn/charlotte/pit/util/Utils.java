@@ -13,7 +13,7 @@ import cn.charlotte.pit.item.type.mythic.MythicBowItem;
 import cn.charlotte.pit.item.type.mythic.MythicLeggingsItem;
 import cn.charlotte.pit.item.type.mythic.MythicSwordItem;
 import cn.charlotte.pit.util.item.ItemUtil;
-import net.minecraft.server.v1_8_R3.NBTTagList;
+import net.minecraft.server.v1_12_R1.NBTTagList;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

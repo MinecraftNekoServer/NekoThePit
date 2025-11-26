@@ -57,7 +57,7 @@ class UberDrop : AbstractPitItem(), Listener {
             var ticks = 0.3f
             object : BukkitRunnable() {
                 override fun run() {
-                    player.playSound(player.location, Sound.CHICKEN_EGG_POP, 1f, ticks)
+                                            player.playSound(player.location, Sound.ENTITY_CHICKEN_EGG, 0.7f, 1f)
                     ticks += 0.1f
                     if (ticks >= 2.0) {
                         cancel()

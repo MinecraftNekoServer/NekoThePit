@@ -54,7 +54,7 @@ public class FourInARow extends AbstractMiniGame {
             winsInfo = handleDown(posInfo, white ? Marked.WHITE : Marked.BLACK);
             if (winsInfo != null) {
                 winner = player;
-                winner.playSound(winner.getLocation(), Sound.FIREWORK_BLAST, 1, 1);
+                winner.playSound(winner.getLocation(), Sound.ENTITY_FIREWORK_BLAST, 1, 1);
                 end();
             }
 

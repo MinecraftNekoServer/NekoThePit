@@ -5,8 +5,8 @@
 package net.jitse.npclib.nms.v1_8_R3.packets;
 
 import com.comphenix.tinyprotocol.Reflection;
-import net.minecraft.server.v1_8_R3.DataWatcher;
-import net.minecraft.server.v1_8_R3.PacketPlayOutNamedEntitySpawn;
+import net.minecraft.server.v1_12_R1.DataWatcher;
+import net.minecraft.server.v1_12_R1.PacketPlayOutNamedEntitySpawn;
 import org.bukkit.Location;
 
 import java.util.UUID;
@@ -35,7 +35,7 @@ public class PacketPlayOutNamedEntitySpawnWrapper {
                 .set(packetPlayOutNamedEntitySpawn, (byte) ((int) (location.getPitch() * 256.0F / 360.0F)));
 
         DataWatcher dataWatcher = new DataWatcher(null);
-        dataWatcher.a(10, (byte) 127);
+        dataWatcher.set(net.minecraft.server.v1_12_R1.DataWatcherRegistry.a.a(10), (byte) 127);
 
         Reflection.getField(packetPlayOutNamedEntitySpawn.getClass(), "i", DataWatcher.class)
                 .set(packetPlayOutNamedEntitySpawn, dataWatcher);

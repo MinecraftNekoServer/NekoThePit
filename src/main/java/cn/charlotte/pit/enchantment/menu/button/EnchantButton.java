@@ -30,13 +30,13 @@ import cn.charlotte.pit.util.random.RandomUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.ItemBow;
-import net.minecraft.server.v1_8_R3.ItemSword;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.ItemBow;
+import net.minecraft.server.v1_12_R1.ItemSword;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -201,7 +201,7 @@ public class EnchantButton extends Button {
                 return;
             }
             if (!removeMythicLegWithColor(player, color)) {
-                player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
                 player.sendMessage(CC.translate("&c请放入一条额外的 " + color.getChatColor() + color.getDisplayName() + "色神话之甲 &c才能附魔!"));
                 return;
             }
@@ -605,7 +605,7 @@ public class EnchantButton extends Button {
         if (announcement) {
             PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
 
-            net.minecraft.server.v1_8_R3.ItemStack nms = CraftItemStack.asNMSCopy(mythicItem.toItemStack());
+            net.minecraft.server.v1_12_R1.ItemStack nms = CraftItemStack.asNMSCopy(mythicItem.toItemStack());
             NBTTagCompound tag = new NBTTagCompound();
             nms.save(tag);
             BaseComponent[] hoverEventComponents = new BaseComponent[]{

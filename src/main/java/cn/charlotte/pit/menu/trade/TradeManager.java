@@ -14,9 +14,9 @@ import cn.charlotte.pit.util.rank.RankUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -158,7 +158,7 @@ public class TradeManager {
         if (bItems.size() > 0) {
             for (ItemStack item : bItems) {
                 String message = "&a&l+ &7" + item.getAmount() + "x &f" + (item.getItemMeta() != null && item.getItemMeta().getDisplayName() != null ? item.getItemMeta().getDisplayName() : item.getType().toString().toUpperCase());
-                net.minecraft.server.v1_8_R3.ItemStack nms = CraftItemStack.asNMSCopy(item);
+                net.minecraft.server.v1_12_R1.ItemStack nms = CraftItemStack.asNMSCopy(item);
                 NBTTagCompound tag = new NBTTagCompound();
                 nms.save(tag);
                 BaseComponent[] hoverEventComponents = new BaseComponent[]{
@@ -175,7 +175,7 @@ public class TradeManager {
         if (aItems.size() > 0) {
             for (ItemStack item : aItems) {
                 String message = "&c&l- &7" + item.getAmount() + "x &f" + (item.getItemMeta() != null && item.getItemMeta().getDisplayName() != null ? item.getItemMeta().getDisplayName() : item.getType().toString().toUpperCase());
-                net.minecraft.server.v1_8_R3.ItemStack nms = CraftItemStack.asNMSCopy(item);
+                net.minecraft.server.v1_12_R1.ItemStack nms = CraftItemStack.asNMSCopy(item);
                 NBTTagCompound tag = new NBTTagCompound();
                 nms.save(tag);
                 BaseComponent[] hoverEventComponents = new BaseComponent[]{

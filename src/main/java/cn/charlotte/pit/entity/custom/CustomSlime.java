@@ -2,10 +2,10 @@ package cn.charlotte.pit.entity.custom;
 
 import cn.charlotte.pit.entity.CustomOwnableEntity;
 import cn.charlotte.pit.entity.EntityUtil;
-import net.minecraft.server.v1_8_R3.EntityInsentient;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.EntitySlime;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import net.minecraft.server.v1_12_R1.EntityInsentient;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.EntitySlime;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 
 /**
  * @Author: EmptyIrony

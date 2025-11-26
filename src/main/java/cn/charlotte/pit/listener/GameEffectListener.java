@@ -28,13 +28,14 @@ import cn.charlotte.pit.util.chat.CC;
 import cn.charlotte.pit.util.item.ItemUtil;
 import com.google.common.util.concurrent.AtomicDouble;
 import lombok.SneakyThrows;
-import net.minecraft.server.v1_8_R3.EnchantmentManager;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.GenericAttributes;
-import net.minecraft.server.v1_8_R3.MobEffectList;
+import net.minecraft.server.v1_12_R1.EnchantmentManager;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.GenericAttributes;
+import net.minecraft.server.v1_12_R1.MobEffectList;
+import net.minecraft.server.v1_12_R1.MobEffects;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -506,8 +507,8 @@ public class GameEffectListener implements Listener {
                 player.sendMessage(CC.translate("&7造成伤害(Damage/Final Damage): &c" + numFormatTwo.format(event.getDamage()) + "&7/&c" + numFormatTwo.format(event.getFinalDamage())));
                 final EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                 final double value = entityPlayer.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).getValue();
-                final float enchantDamage = EnchantmentManager.a(entityPlayer.bA(), ((CraftLivingEntity) event.getEntity()).getHandle().getMonsterType());
-                final boolean critical = entityPlayer.fallDistance > 0.0F && !entityPlayer.onGround && !entityPlayer.k_() && !entityPlayer.V() && !entityPlayer.hasEffect(MobEffectList.BLINDNESS) && entityPlayer.vehicle == null;
+                final float enchantDamage = EnchantmentManager.a(entityPlayer.getItemInMainHand(), ((CraftLivingEntity) event.getEntity()).getHandle().getMonsterType());
+                final boolean critical = entityPlayer.fallDistance > 0.0F && !entityPlayer.onGround && !entityPlayer.isSprinting() && !entityPlayer.isInWater() && !entityPlayer.hasEffect(MobEffects.BLINDNESS) && entityPlayer.getVehicle() == null;
                 player.sendMessage(CC.translate("&7基础: &c" + value + "&7,附魔伤害: &c" + enchantDamage + "&7,暴击: &c" + critical));
             }
         }

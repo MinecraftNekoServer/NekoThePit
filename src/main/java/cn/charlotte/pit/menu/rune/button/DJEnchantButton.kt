@@ -49,7 +49,7 @@ class DJEnchantButton(
             leggingsItem.loadFromItemStack(itemStack)
             leggingsItem.enchantments[enchantment] = 1
 
-            player.playSound(player.location, Sound.ANVIL_USE, 1f, 99f)
+                                    player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 0.7f, 1f)
             player.sendMessage(CC.translate("&6&l铸造！ &7成功为你的神话之裤增加了${enchantment.enchantName}附魔"))
 
             player.inventory.setItem(index, leggingsItem.toItemStack())

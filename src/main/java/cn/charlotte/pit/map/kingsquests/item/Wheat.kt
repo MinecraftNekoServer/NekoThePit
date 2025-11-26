@@ -75,7 +75,7 @@ object Wheat: AbstractPitItem(), Listener {
                 amount = result
             })
 
-            player.playSound(block.location, Sound.ORB_PICKUP, 1f, 1f)
+                        player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5f, 1f)
         }
 
     }

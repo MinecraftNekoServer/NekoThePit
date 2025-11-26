@@ -140,14 +140,13 @@ class ToTheMoonMegaStreak: AbstractPerk() , IPlayerKilledEntity, IPlayerDamaged,
                 MessageType.COMBAT,
                 "&c&l超级连杀! " + event.playerProfile.formattedNameWithRoman + " &7激活了 &b&l月球之旅 &7!"
             )
-            Bukkit.getOnlinePlayers().forEach { player: Player? ->
-                player!!.playSound(
+            val player = Bukkit.getPlayer(event.playerProfile.playerUuid)
+            player?.playSound(
                     player.location,
-                    Sound.WITHER_SPAWN,
+                    Sound.ENTITY_WITHER_SPAWN,
                     0.8f,
                     1.5f
                 )
-            }
         }
     }
 

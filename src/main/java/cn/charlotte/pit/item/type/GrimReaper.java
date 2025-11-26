@@ -78,12 +78,12 @@ public class GrimReaper extends AbstractPitItem implements Listener {
                 }
 
                 player.sendMessage("§c死神祝福已发给 " + lines[0]);
-                player.playSound(player.getLocation(), Sound.VILLAGER_YES, 1.5f, 1.5f);
+                player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_YES, 1.5f, 1.5f);
                 PlayerUtil.takeOneItemInHand(player);
                 player.closeInventory();
 
                 target.sendMessage("§c你被" + player.getName() + "祝福了");
-                target.playSound(target.getLocation(), Sound.VILLAGER_NO, 1.5f, 1.5f);
+                target.playSound(target.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.5f, 1.5f);
                 Bukkit.getScheduler().runTaskLater(ThePit.getInstance(), () -> {
                     PlayerUtil.deadPlayer(target);
                 }, 30L);

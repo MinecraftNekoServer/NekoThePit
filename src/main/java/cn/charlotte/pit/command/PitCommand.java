@@ -36,9 +36,9 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -152,7 +152,7 @@ public class PitCommand {
             player.sendMessage(CC.translate("&c此物品无法被用于展示!"));
             return;
         }
-        net.minecraft.server.v1_8_R3.ItemStack nms = CraftItemStack.asNMSCopy(player.getItemInHand());
+        net.minecraft.server.v1_12_R1.ItemStack nms = CraftItemStack.asNMSCopy(player.getItemInHand());
         NBTTagCompound tag = new NBTTagCompound();
         nms.save(tag);
         BaseComponent[] hoverEventComponents = new BaseComponent[]{
@@ -644,7 +644,7 @@ public class PitCommand {
             data.active();
 
             profile.getMailData().sendMail(mail);
-            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 0.8F);
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 0.8F);
             player.sendMessage(CC.translate("&a领取成功! 请在邮件NPC处领取奖励!"));
         } else {
             player.sendMessage(CC.translate("&c你已经领取过这个CDK了!"));

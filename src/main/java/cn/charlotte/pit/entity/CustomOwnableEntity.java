@@ -1,7 +1,7 @@
 package cn.charlotte.pit.entity;
 
-import net.minecraft.server.v1_8_R3.EntityInsentient;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_12_R1.EntityInsentient;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
 
 /**
  * @Author: EmptyIrony

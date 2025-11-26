@@ -6,7 +6,7 @@ package net.jitse.npclib.internal;
 
 public enum MinecraftVersion {
 
-    V1_8_R3,
+    
     V1_9_R1,
     V1_9_R2,
     V1_10_R1,

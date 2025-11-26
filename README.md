@@ -20,8 +20,9 @@
 - **PlayerPoints** - 玩家积分系统
 - **DecentHolograms** - 全息图支持
 - **ViaVersion** - 版本兼容性支持
-- **MongoDB** - 数据库存储 (如果使用数据库功能)
 - **Redis** - 高性能数据缓存 (如果使用缓存功能)
+- **WordEdit**
+- **Citizens**
 
 ## 安装说明
 

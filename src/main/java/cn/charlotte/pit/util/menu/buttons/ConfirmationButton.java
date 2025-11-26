@@ -53,9 +53,9 @@ public class ConfirmationButton extends Button {
         }
 
         if (this.confirm) {
-            player.playSound(player.getLocation(), Sound.NOTE_PIANO, 20f, 0.1f);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 20f, 0.1f);
         } else {
-            player.playSound(player.getLocation(), Sound.DIG_GRAVEL, 20f, 0.1F);
+            player.playSound(player.getLocation(), Sound.BLOCK_GRAVEL_BREAK, 20f, 0.1F);
         }
 
         if (this.closeAfterResponse) {

@@ -10,11 +10,11 @@ import cn.charlotte.pit.util.VectorUtil;
 import cn.charlotte.pit.util.aabb.AxisAlignedBB;
 import cn.charlotte.pit.util.chat.ActionBarUtil;
 import cn.charlotte.pit.util.chat.CC;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayInFlying;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+import net.minecraft.server.v1_12_R1.EnumParticle;
+import net.minecraft.server.v1_12_R1.PacketPlayInFlying;
+import net.minecraft.server.v1_12_R1.PacketPlayOutWorldParticles;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -214,7 +214,7 @@ public class PlayerMoveHandler implements MovementHandler, Listener {
             player.getLocation().setPitch(-30);
             VectorUtil.entityPush(player, blockIterator.next().getLocation(), 110);
 
-            player.playSound(player.getLocation(), Sound.EXPLODE, 1, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
             PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.EXPLOSION_LARGE, true, (float) to.getX(), (float) to.getY(), (float) to.getZ(), 0, 0, 0, 0, 1, 1);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
         }

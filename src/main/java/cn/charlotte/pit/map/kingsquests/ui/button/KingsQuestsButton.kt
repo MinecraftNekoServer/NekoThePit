@@ -97,7 +97,7 @@ object KingsQuestsButton: Button() {
         player.sendMessage(" &b${decimalFormat.format(rewardExp)}经验")
         player.sendMessage(" &6${decimalFormat.format(rewardCoins)}金币")
 
-        player.playSound(player.location, Sound.LEVEL_UP, 1.2f, 1.2f)
+                                player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
     }
 
     override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {

@@ -22,12 +22,12 @@ import cn.charlotte.pit.util.time.TimeUtil
 import eu.decentsoftware.holograms.api.DHAPI
 import eu.decentsoftware.holograms.api.holograms.Hologram
 import eu.decentsoftware.holograms.api.holograms.HologramLine
-import net.minecraft.server.v1_8_R3.*
+import net.minecraft.server.v1_12_R1.*
 import org.bukkit.*
 import org.bukkit.Material
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
@@ -201,10 +201,10 @@ class BlockHeadEvent : IEvent, IEpicEvent, IScoreBoardInsert, Listener {
                             .canDrop(false)
                             .buildWithUnbreakable()
                     }
-                    player.playSound(player.location, Sound.HORSE_ARMOR, 1F, 1F)
+                    player.playSound(player.location, Sound.ENTITY_HORSE_ARMOR, 1f, 1f)
                     CC.send(MessageType.EVENT, player, "&9&l捡起! &7你已装备钻石套装!")
                 }
-                player.playSound(player.location, Sound.LEVEL_UP, 4F, 2F)
+                            player.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f)
                 data.cooldown = Cooldown(30, TimeUnit.SECONDS)
                 for (target in Bukkit.getOnlinePlayers()) {
                     data.changeItem(false)
@@ -323,7 +323,7 @@ class BlockHeadEvent : IEvent, IEpicEvent, IScoreBoardInsert, Listener {
             generateBlock(killData, now.location)
         }
 
-        location.world.playSound(location, Sound.EXPLODE, 4F, 1F)
+        location.world.playSound(location, Sound.ENTITY_GENERIC_EXPLODE, 4F, 1F)
         location.world.playEffect(location, Effect.EXPLOSION_HUGE, 1)
 
         val dropped = ArrayList<EntityFallingBlock>()
@@ -453,10 +453,10 @@ class BlockHeadEvent : IEvent, IEpicEvent, IScoreBoardInsert, Listener {
         for (self in Bukkit.getOnlinePlayers()) {
             for (target in Bukkit.getOnlinePlayers()) {
                 val data = cache[target.uniqueId] ?: continue
-                (self as CraftPlayer).handle.playerConnection.sendPacket(
+                                (self as CraftPlayer).handle.playerConnection.sendPacket(
                     PacketPlayOutEntityEquipment(
                         target.entityId,
-                        4,
+                        EnumItemSlot.HEAD,
                         CraftItemStack.asNMSCopy(
                             ItemStack(data.block, 1, data.data.toShort())
                         )
@@ -480,10 +480,10 @@ class BlockHeadEvent : IEvent, IEpicEvent, IScoreBoardInsert, Listener {
 
         for (self in Bukkit.getOnlinePlayers()) {
             for (target in Bukkit.getOnlinePlayers()) {
-                (self as CraftPlayer).handle.playerConnection.sendPacket(
+                                (self as CraftPlayer).handle.playerConnection.sendPacket(
                     PacketPlayOutEntityEquipment(
                         target.entityId,
-                        4,
+                        EnumItemSlot.HEAD,
                         CraftItemStack.asNMSCopy(target.inventory.helmet))
                     )
             }

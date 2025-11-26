@@ -32,7 +32,7 @@ public class LeaderEventsButton extends Button {
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton, ItemStack currentItem) {
         player.closeInventory();
-        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT,1,1);
+        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT,1,1);
         player.sendMessage(CC.translate("&c因为此选项并未启用,因此你无法进行选择！"));
     }
 }

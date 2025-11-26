@@ -108,12 +108,12 @@ public class AnimationRunnable extends BukkitRunnable {
                         for (Location location : animationLocations) {
                             player.sendBlockChange(location, Material.STAINED_GLASS, foundColor.getColorByte());
                         }
-                        player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1.2F);
+                        player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1.2F);
                     } else if (data.animationTick == 2 || data.animationTick == 3 || data.animationTick == 6 || data.animationTick == 7) {
                         for (Location location : animationLocations) {
                             player.sendBlockChange(location, Material.STAINED_GLASS, (byte) 0);
                         }
-                        player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1.2F);
+                        player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1.2F);
                     } else {
                         if (data.animationTick <= 23) {
                             int i = data.animationTick % 8;
@@ -123,7 +123,7 @@ public class AnimationRunnable extends BukkitRunnable {
                             } else {
                                 player.sendBlockChange(animationLocations.get(i - 1), Material.STAINED_GLASS, (byte) 0);
                             }
-                            player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1, 0.3F + i * 0.5F);
+                            player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 0.3F + i * 0.5F);
                             player.sendBlockChange(location, Material.STAINED_GLASS, foundColor.getColorByte());
                         } else {
                             data.finished = true;

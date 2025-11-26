@@ -35,12 +35,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import net.minecraft.server.v1_8_R3.EntityVillager;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.EntityVillager;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftVillager;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -792,10 +792,7 @@ public class HamburgerEvent implements IEvent, IEpicEvent, Listener, IScoreBoard
                     try {
                         this.villager = (Villager) Bukkit.getWorlds().get(0).spawnEntity(location, EntityType.VILLAGER);
                         final EntityVillager entityVillager = ((CraftVillager) villager).getHandle();
-                        NBTTagCompound tag = entityVillager.getNBTTag();
-                        if (tag == null) {
-                            tag = new NBTTagCompound();
-                        }
+                        NBTTagCompound tag = new NBTTagCompound();
                         entityVillager.c(tag);
                         tag.setInt("NoAI", 1);
                         entityVillager.f(tag);
@@ -1012,7 +1009,7 @@ public class HamburgerEvent implements IEvent, IEpicEvent, Listener, IScoreBoard
             final World world = Bukkit.getWorlds().get(0);
             final Villager villager = (Villager) world.spawnEntity(location, EntityType.VILLAGER);
             final EntityVillager entityVillager = ((CraftVillager) villager).getHandle();
-            NBTTagCompound tag = entityVillager.getNBTTag();
+            NBTTagCompound tag = new NBTTagCompound();
             if (tag == null) {
                 tag = new NBTTagCompound();
             }

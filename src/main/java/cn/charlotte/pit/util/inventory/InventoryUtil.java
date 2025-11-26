@@ -7,11 +7,11 @@ import cn.charlotte.pit.util.PlayerUtil;
 import cn.charlotte.pit.util.chat.CC;
 import cn.charlotte.pit.util.item.ItemBuilder;
 import cn.charlotte.pit.util.item.ItemUtil;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 import java.util.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -322,7 +322,7 @@ public class InventoryUtil {
         
         ByteArrayOutputStream outputStream = null;
         try {
-            net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
+            net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
             NBTTagCompound nbtTagCompound = new NBTTagCompound();
             nmsStack.save(nbtTagCompound);
             outputStream = new ByteArrayOutputStream();
@@ -345,7 +345,7 @@ public class InventoryUtil {
         ItemStack itemStack = null;
         try {
             nbtTagCompound = NBTCompressedStreamTools.a(inputStream);
-            net.minecraft.server.v1_8_R3.ItemStack nmsStack = net.minecraft.server.v1_8_R3.ItemStack.createStack(nbtTagCompound);
+            net.minecraft.server.v1_12_R1.ItemStack nmsStack = new net.minecraft.server.v1_12_R1.ItemStack(nbtTagCompound);
             itemStack = CraftItemStack.asBukkitCopy(nmsStack);
         } catch (IllegalArgumentException | SecurityException | IOException e) {
             e.printStackTrace();
@@ -394,7 +394,7 @@ public class InventoryUtil {
             if (ItemUtil.isDefaultItem(item)) {
                 //player.getInventory().remove(item);
 
-                net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+                net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
                 if (nmsItem != null) {
                     Item itemType = nmsItem.getItem();
                     if (itemType instanceof ItemArmor) {

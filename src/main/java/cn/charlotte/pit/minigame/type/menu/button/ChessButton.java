@@ -60,15 +60,15 @@ public class ChessButton extends Button {
             return;
         }
         if (!canPlay) {
-            player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1);
             player.sendMessage(CC.translate("&c请等待对手落子"));
             return;
         }
         if (posInfo.getMarkedInfo() == FourInARow.Marked.NULL) {
             gameInstance.tryPlay(player, posInfo);
-            player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1, 1);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HAT, 1, 1);
         } else {
-            player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1);
             player.sendMessage(CC.translate("&c你不能下在那里"));
         }
     }

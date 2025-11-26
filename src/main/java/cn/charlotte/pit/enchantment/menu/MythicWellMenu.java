@@ -227,7 +227,7 @@ public class MythicWellMenu extends Menu {
                 player.sendMessage(CC.translate("&c你必须放入未被附魔的神话武器才可以进行附魔!"));
                 player.sendMessage(CC.translate("&c神话武器有概率从战斗中掉落!"));
 
-                player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1, 1.2F);
+                player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1.2F);
                 return;
             }
 
@@ -274,7 +274,7 @@ public class MythicWellMenu extends Menu {
                         profile.setEnchantingBook(InventoryUtil.serializeItemStack(event.getCurrentItem()));
                         event.getClickedInventory().setItem(event.getSlot(), new ItemBuilder(Material.AIR).build());
                         this.openMenu(player);
-                        player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1, 0.9F);
+                        player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 0.9F);
                         return;
                     }
 
@@ -306,12 +306,12 @@ public class MythicWellMenu extends Menu {
                                                 profile.setEnchantingScience(InventoryUtil.serializeItemStack(event.getCurrentItem()));
                                                 event.getClickedInventory().setItem(event.getSlot(), new ItemBuilder(Material.AIR).build());
                                                 this.openMenu(player);
-                                                player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1, 0.9F);
+                                                player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 0.9F);
                                                 return;
                                             }
                                         }
                                     }
-                                    player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1, 1.2F);
+                                    player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1.2F);
                                     player.sendMessage(CC.translate("&c颜色不符合! 您需要放入 " + color.getChatColor() + color.getDisplayName() + "色神话之甲 &c作为附魔材料."));
                                     return;
                                 }
@@ -335,7 +335,7 @@ public class MythicWellMenu extends Menu {
             profile.setEnchantingItem(InventoryUtil.serializeItemStack(mythicItem.toItemStack()));
             event.getClickedInventory().setItem(event.getSlot(), new ItemBuilder(Material.AIR).build());
             this.openMenu(player);
-            player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1, 0.9F);
+            player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 0.9F);
         }
     }
 

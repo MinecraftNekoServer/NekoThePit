@@ -11,7 +11,7 @@ import cn.charlotte.pit.util.cooldown.Cooldown
 import com.google.common.util.concurrent.AtomicDouble
 import org.bukkit.Material
 import org.bukkit.Sound
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.metadata.FixedMetadataValue
@@ -81,8 +81,8 @@ class WitheredAndPiercingThroughTheHeart: AbstractEnchantment(), IPlayerShootEnt
                 victim.setMetadata("lastThroughTheHeart", FixedMetadataValue(ThePit.getInstance(), System.currentTimeMillis()))
             }
 
-            attacker.playSound(attacker.location, Sound.ANVIL_LAND, 1f, 1f)
-            victim.playSound(attacker.location, Sound.ANVIL_LAND, 1f, 1f)
+                            attacker.playSound(attacker.location, Sound.BLOCK_ANVIL_LAND, 0.5f, 0.5f)
+                attacker.playSound(attacker.location, Sound.BLOCK_ANVIL_LAND, 0.5f, 0.5f)
 
             val ePlayer = (attacker as CraftPlayer).handle
             ePlayer.absorptionHearts = min(((1f + enchantLevel) * 2) * 2, (1f + enchantLevel) * 2)

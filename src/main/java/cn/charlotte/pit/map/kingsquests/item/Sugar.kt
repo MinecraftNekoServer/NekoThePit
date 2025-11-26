@@ -33,7 +33,7 @@ object Sugar: AbstractPitItem(), Listener {
 
         submit(delay = 20 * 60 * 3) {
             block.type = Material.MELON_BLOCK
-            block.world.playSound(block.location, Sound.ORB_PICKUP, 1f, 1f)
+            player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5f, 1f)
         }
     }
 

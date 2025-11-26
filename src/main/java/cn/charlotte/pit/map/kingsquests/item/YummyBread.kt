@@ -84,7 +84,7 @@ object YummyBread: AbstractPitItem(), Listener {
             countdown--
             if (countdown <= 0) {
                 player.inventory.addItem(toItemStack())
-                player.playSound(block.location, Sound.ORB_PICKUP, 1f, 1f)
+                player.playSound(block.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f)
                 hologram.deSpawn()
                 block.type = Material.FURNACE
                 furnace.burnTime = 0
@@ -133,7 +133,7 @@ object YummyBread: AbstractPitItem(), Listener {
             if (ItemUtil.getInternalName(item) == "yummy_bread") {
                 PlayerUtil.takeOneItemInHand(player)
                 PlayerUtil.heal(player, 1.0)
-                player.playSound(player.location, Sound.EAT, 1f, 1f)
+                                        player.playSound(player.location, Sound.ENTITY_GENERIC_EAT, 1f, 1f)
             }
         }
     }

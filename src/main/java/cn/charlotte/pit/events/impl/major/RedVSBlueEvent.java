@@ -18,12 +18,13 @@ import cn.charlotte.pit.util.item.ItemBuilder;
 import cn.charlotte.pit.util.level.LevelUtil;
 import cn.charlotte.pit.util.time.TimeUtil;
 import lombok.Getter;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityEquipment;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
+import net.minecraft.server.v1_12_R1.EnumItemSlot;
+import net.minecraft.server.v1_12_R1.PacketPlayOutEntityEquipment;
+import net.minecraft.server.v1_12_R1.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -282,20 +283,11 @@ public class RedVSBlueEvent implements IEvent, IEpicEvent, Listener, IScoreBoard
 
 
     private void sendPacket(Player player) {
-        PacketPlayOutEntityEquipment packet = null;
+        PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
         if (redTeam.contains(player.getUniqueId())) {
-            packet = new PacketPlayOutEntityEquipment(player.getEntityId(), 4, CraftItemStack.asNMSCopy(new ItemBuilder(Material.WOOL).durability(14).build()));
+            connection.sendPacket(new PacketPlayOutEntityEquipment(player.getEntityId(), EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemBuilder(Material.WOOL).durability(14).build())));
         } else if (blueTeam.contains(player.getUniqueId())) {
-            packet = new PacketPlayOutEntityEquipment(player.getEntityId(), 4, CraftItemStack.asNMSCopy(new ItemBuilder(Material.WOOL).durability(11).build()));
-        }
-        if (packet == null) {
-            return;
-        }
-        for (Player target : Bukkit.getOnlinePlayers()) {
-            if (target.equals(player)) continue;
-            ((CraftPlayer) target).getHandle()
-                    .playerConnection
-                    .sendPacket(packet);
+            connection.sendPacket(new PacketPlayOutEntityEquipment(player.getEntityId(), EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(new ItemBuilder(Material.WOOL).durability(11).build())));
         }
     }
 
@@ -304,7 +296,7 @@ public class RedVSBlueEvent implements IEvent, IEpicEvent, Listener, IScoreBoard
             PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
             for (Player target : Bukkit.getOnlinePlayers()) {
                 if (player.equals(target)) continue;
-                connection.sendPacket(new PacketPlayOutEntityEquipment(target.getEntityId(), 4, CraftItemStack.asNMSCopy(target.getInventory().getHelmet())));
+                connection.sendPacket(new PacketPlayOutEntityEquipment(target.getEntityId(), EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(target.getInventory().getHelmet())));
             }
         }
     }

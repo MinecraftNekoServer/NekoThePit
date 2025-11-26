@@ -176,14 +176,7 @@ class UberStreak : AbstractPerk(), Listener, MegaStreak {
                 MessageType.COMBAT,
                 "&c&l超级连杀! " + event.playerProfile.formattedNameWithRoman + " &7激活了 &c&l登峰造极 &7!"
             )
-            Bukkit.getOnlinePlayers().forEach { online: Player ->
-                online.playSound(
-                    online.location,
-                    Sound.WITHER_SPAWN,
-                    0.8f,
-                    1.5f
-                )
-            }
+            player.playSound(player.location, Sound.ENTITY_WITHER_SPAWN, 0.8f, 1.5f)
         }
 
         if (event.from < 200 && event.to >= 200) {

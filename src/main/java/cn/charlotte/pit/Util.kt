@@ -2,10 +2,10 @@ package cn.charlotte.pit
 
 import cn.charlotte.pit.data.PlayerProfile
 import cn.charlotte.pit.util.PlayerUtil
-import net.minecraft.server.v1_8_R3.ItemStack
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack
-import org.bukkit.craftbukkit.v1_8_R3.util.CraftMagicNumbers
+import net.minecraft.server.v1_12_R1.ItemStack
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
+import org.bukkit.craftbukkit.v1_12_R1.util.CraftMagicNumbers
 import org.bukkit.entity.Player
 
 
@@ -14,8 +14,10 @@ fun Player.getPitProfile(): PlayerProfile {
 }
 
 fun Player.releaseItem() {
-    val craftPlayer = this as CraftPlayer
-    craftPlayer.handle.bU()
+    this.inventory.itemInHand?.let {
+        this.world.dropItemNaturally(this.location, it)
+        this.inventory.setItemInHand(null)
+    }
 }
 
 fun Player.dead() {

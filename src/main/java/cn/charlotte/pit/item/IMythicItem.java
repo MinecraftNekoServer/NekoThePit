@@ -15,8 +15,8 @@ import cn.charlotte.pit.util.chat.RomanUtil;
 import cn.charlotte.pit.util.item.ItemBuilder;
 import cn.charlotte.pit.util.random.RandomUtil;
 import lombok.Getter;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagList;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagList;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -253,7 +253,7 @@ public abstract class IMythicItem extends AbstractPitItem {
             return;
         }
 
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = UtilKt.reflectGetNmsItem(item);
         if (nmsItem == null) return;
         NBTTagCompound tag = nmsItem.getTag();
         if (tag == null) {

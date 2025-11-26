@@ -108,11 +108,11 @@ public class SelfConfirmButton extends Button {
                 accept = tradeManager.isBConfirm();
             }
             if (accept) {
-                tradeManager.getPlayerB().playSound(tradeManager.getPlayerB().getLocation(), Sound.VILLAGER_YES, 1, 1);
-                tradeManager.getPlayerA().playSound(tradeManager.getPlayerA().getLocation(), Sound.VILLAGER_YES, 1, 1);
+                tradeManager.getPlayerB().playSound(tradeManager.getPlayerB().getLocation(), Sound.ENTITY_VILLAGER_YES, 1, 1);
+                tradeManager.getPlayerA().playSound(tradeManager.getPlayerA().getLocation(), Sound.ENTITY_VILLAGER_YES, 1, 1);
             } else {
-                tradeManager.getPlayerA().playSound(tradeManager.getPlayerA().getLocation(), Sound.VILLAGER_HAGGLE, 1, 1);
-                tradeManager.getPlayerB().playSound(tradeManager.getPlayerB().getLocation(), Sound.VILLAGER_HAGGLE, 1, 1);
+                tradeManager.getPlayerA().playSound(tradeManager.getPlayerA().getLocation(), Sound.ENTITY_VILLAGER_AMBIENT, 1, 1);
+                tradeManager.getPlayerB().playSound(tradeManager.getPlayerB().getLocation(), Sound.ENTITY_VILLAGER_AMBIENT, 1, 1);
             }
         }
     }

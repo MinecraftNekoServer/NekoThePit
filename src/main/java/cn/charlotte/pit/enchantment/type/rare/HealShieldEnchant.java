@@ -72,8 +72,8 @@ public class HealShieldEnchant extends AbstractEnchantment implements IPlayerDam
             cancel.set(true);
             myself.sendMessage(CC.translate("&c你的一层护盾因受到攻击而破裂! 剩余层数: " + shield.get(myself.getUniqueId())));
             attacker.sendMessage(CC.translate("&c对方的一层护盾抵消了你的攻击而破裂!"));
-            ((Player) attacker).playSound(attacker.getLocation(), Sound.ANVIL_LAND, 1, 1);
-            myself.playSound(attacker.getLocation(), Sound.ANVIL_LAND, 1, 1);
+            ((Player) attacker).playSound(attacker.getLocation(), Sound.BLOCK_ANVIL_LAND, 1, 1);
+            myself.playSound(attacker.getLocation(), Sound.BLOCK_ANVIL_LAND, 1, 1);
             PlayerUtil.heal(myself, 0.2 * myself.getMaxHealth());
         }
     }

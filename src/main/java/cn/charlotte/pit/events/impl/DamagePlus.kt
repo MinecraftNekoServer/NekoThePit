@@ -10,7 +10,7 @@ import cn.charlotte.pit.events.IScoreBoardInsert
 import cn.charlotte.pit.util.ParticleBuilder
 import cn.charlotte.pit.util.PlayerUtil
 import cn.charlotte.pit.util.chat.CC
-import net.minecraft.server.v1_8_R3.EnumParticle
+import net.minecraft.server.v1_12_R1.EnumParticle
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.entity.Player
@@ -107,7 +107,7 @@ class DamagePlus : IEvent, INormalEvent, Listener, IScoreBoardInsert {
                     profile?.renown = profile?.renown?.plus(1) ?: 0
                     eventData.kill = 0
                     event.killer.sendMessage(CC.translate("&c&l猎杀! &6声望 +1"))
-                    event.killer.playSound(event.killer.location, Sound.NOTE_PLING, 0.5f, 0.5f)
+                    event.killer.playSound(event.killer.location, Sound.BLOCK_NOTE_HARP, 0.5f, 0.5f)
                 }
             }
         }

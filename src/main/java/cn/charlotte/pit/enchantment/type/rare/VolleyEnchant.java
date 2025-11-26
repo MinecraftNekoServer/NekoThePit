@@ -11,13 +11,13 @@ import cn.charlotte.pit.util.chat.CC;
 import cn.charlotte.pit.util.cooldown.Cooldown;
 import cn.charlotte.pit.util.item.ItemBuilder;
 import lombok.SneakyThrows;
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.ItemBow;
-import net.minecraft.server.v1_8_R3.ItemStack;
+import net.minecraft.server.v1_12_R1.EntityHuman;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.ItemBow;
+import net.minecraft.server.v1_12_R1.ItemStack;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,7 +44,7 @@ public class VolleyEnchant extends AbstractEnchantment implements Listener {
 
     @SneakyThrows
     public VolleyEnchant() {
-        this.playerUsingFiled = EntityHuman.class.getDeclaredField("h");
+        this.playerUsingFiled = EntityHuman.class.getDeclaredField("bB");
         this.playerUsingFiled.setAccessible(true);
     }
 

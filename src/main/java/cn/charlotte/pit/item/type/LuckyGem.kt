@@ -8,7 +8,7 @@ import cn.charlotte.pit.util.PlayerUtil
 import cn.charlotte.pit.util.chat.CC
 import cn.charlotte.pit.util.item.ItemBuilder
 import cn.charlotte.pit.util.item.ItemUtil
-import net.minecraft.server.v1_8_R3.EnumParticle
+import net.minecraft.server.v1_12_R1.EnumParticle
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.event.Event

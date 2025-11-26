@@ -44,7 +44,7 @@ dependencies {
     compileOnly(libs.protocollib)
     compileOnly(libs.papi)
     compileOnly(libs.playerpoints)
-    compileOnly(libs.spigot.get8())
+    compileOnly("org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT")
 }
 
 tasks.shadowJar {
@@ -61,9 +61,13 @@ tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 
-tasks.withType<Javadoc> {
-    options.encoding = "UTF-8"
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "21"
+        freeCompilerArgs = listOf("-Xmx2048m")
+    }
 }
+
 kotlin {
     jvmToolchain(21)
 }

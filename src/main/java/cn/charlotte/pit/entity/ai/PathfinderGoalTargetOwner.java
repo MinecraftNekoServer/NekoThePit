@@ -1,7 +1,7 @@
 package cn.charlotte.pit.entity.ai;
 
 import cn.charlotte.pit.entity.CustomOwnableEntity;
-import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_12_R1.EntityLiving;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 /**
@@ -25,7 +25,7 @@ public class PathfinderGoalTargetOwner extends PathfinderGoalCustomTarget {
             return false;
         } else {
             this.lastDamager = owner.getLastDamager();
-            int hurtTimestamp = owner.be();
+            int hurtTimestamp = owner.ticksLived;
             return hurtTimestamp != this.hurtTimestamp && this.a(this.lastDamager, false);
         }
     }
@@ -34,7 +34,7 @@ public class PathfinderGoalTargetOwner extends PathfinderGoalCustomTarget {
         this.e.setGoalTarget(this.lastDamager, EntityTargetEvent.TargetReason.TARGET_ATTACKED_OWNER, true);
         EntityLiving owner = this.self.getOwner();
         if (owner != null) {
-            this.hurtTimestamp = owner.be();
+            this.hurtTimestamp = owner.ticksLived;
         }
 
         super.c();

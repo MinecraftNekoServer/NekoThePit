@@ -85,7 +85,7 @@ public class EnchantButton extends Button {
                     } else {
                         if (level > enchantment.getMaxEnchantLevel() && !clickType.isShiftClick()) {
                             player.sendMessage(CC.translate("&c已到达最大等级!"));
-                            player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1, 99);
+                            player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1, 99);
                             return;
                         }
                     }
@@ -105,7 +105,7 @@ public class EnchantButton extends Button {
                 if (level != -1) {
                     swordItem.getEnchantments().put(enchantment, level);
                 }
-                player.playSound(player.getLocation(), Sound.ANVIL_USE, 1, 99);
+                player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 99);
                 player.sendMessage(CC.translate("&a成功"));
                 player.setItemInHand(swordItem.toItemStack());
                 return;
@@ -124,7 +124,7 @@ public class EnchantButton extends Button {
                     } else {
                         if (level > enchantment.getMaxEnchantLevel() && !clickType.isShiftClick()) {
                             player.sendMessage(CC.translate("&c已到达最大等级!"));
-                            player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1, 99);
+                            player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1, 99);
                             return;
                         }
                     }
@@ -141,7 +141,7 @@ public class EnchantButton extends Button {
                 if (level != -1) {
                     bowItem.getEnchantments().put(enchantment, level);
                 }
-                player.playSound(player.getLocation(), Sound.ANVIL_USE, 1, 99);
+                player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 99);
                 player.sendMessage(CC.translate("&a成功"));
                 player.setItemInHand(bowItem.toItemStack());
                 return;
@@ -160,7 +160,7 @@ public class EnchantButton extends Button {
                     } else {
                         if (level > enchantment.getMaxEnchantLevel() && !clickType.isShiftClick()) {
                             player.sendMessage(CC.translate("&c已到达最大等级!"));
-                            player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1, 99);
+                            player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1, 99);
                             return;
                         }
                     }
@@ -177,7 +177,7 @@ public class EnchantButton extends Button {
                 if (level != -1) {
                     leggingsItem.getEnchantments().put(enchantment, level);
                 }
-                player.playSound(player.getLocation(), Sound.ANVIL_USE, 1, 99);
+                player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 99);
                 player.sendMessage(CC.translate("&a成功"));
                 player.setItemInHand(leggingsItem.toItemStack());
                 return;
@@ -196,7 +196,7 @@ public class EnchantButton extends Button {
                     } else {
                         if (level > enchantment.getMaxEnchantLevel() && !clickType.isShiftClick()) {
                             player.sendMessage(CC.translate("&c已到达最大等级!"));
-                            player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1, 99);
+                            player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1, 99);
                             return;
                         }
                     }
@@ -207,13 +207,13 @@ public class EnchantButton extends Button {
                 if (level != -1) {
                     fishingRod.getEnchantments().put(enchantment, level);
                 }
-                player.playSound(player.getLocation(), Sound.ANVIL_USE, 1, 99);
+                player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 99);
                 player.sendMessage(CC.translate("&a成功"));
                 player.setItemInHand(fishingRod.toItemStack());
                 return;
             }
         }
-        player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1, 99);
+        player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1, 99);
         player.sendMessage(CC.translate("&c附魔失败!你使用了错误的附魔在这个物品上"));
     }
 }

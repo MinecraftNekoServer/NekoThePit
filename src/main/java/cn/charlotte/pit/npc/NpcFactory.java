@@ -70,12 +70,30 @@ public class NpcFactory implements Listener {
         }
 
         for (AbstractPitNPC pitNpc : pitNpc) {
-            pitNpc.getNpc().create();
-            if (!pitNpc.getNpc().isShown(player)) {
-                pitNpc.getNpc().show(player);
+            NPC npc = pitNpc.getNpc();
+            if (npc == null) {
+                continue;
             }
-            pitNpc.getNpc()
-                    .setText(player, pitNpc.getNpcTextLine(player));
+            
+            // 只有在NPC未创建时才创建
+            if (!npc.isCreated()) {
+                npc.create();
+            }
+            
+            if (!npc.isShown(player)) {
+                try {
+                    npc.show(player);
+                } catch (Exception e) {
+                    // 记录异常但不中断其他NPC的加载
+                    ThePit.getInstance().getLogger().warning("Failed to show NPC " + pitNpc.getNpcInternalName() + " to player " + player.getName() + ": " + e.getMessage());
+                }
+            }
+            
+            try {
+                npc.setText(player, pitNpc.getNpcTextLine(player));
+            } catch (Exception e) {
+                ThePit.getInstance().getLogger().warning("Failed to set NPC text for " + pitNpc.getNpcInternalName() + " to player " + player.getName() + ": " + e.getMessage());
+            }
         }
 
     }

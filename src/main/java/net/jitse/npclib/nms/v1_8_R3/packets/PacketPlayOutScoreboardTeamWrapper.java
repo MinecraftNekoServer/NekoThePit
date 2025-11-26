@@ -18,18 +18,18 @@ public class PacketPlayOutScoreboardTeamWrapper {
     public PacketPlayOutScoreboardTeam createRegisterTeam(String name) {
         PacketPlayOutScoreboardTeam packetPlayOutScoreboardTeam = new PacketPlayOutScoreboardTeam();
 
-        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), "h", int.class)
+        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), int.class, 0)
                 .set(packetPlayOutScoreboardTeam, 0);
-        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), "b", String.class)
+        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), String.class, 0)
                 .set(packetPlayOutScoreboardTeam, name);
-        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), "a", String.class)
+        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), String.class, 1)
                 .set(packetPlayOutScoreboardTeam, name);
-        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), "e", String.class)
+        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), String.class, 2)
                 .set(packetPlayOutScoreboardTeam, "never");
-        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), "i", int.class)
+        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), int.class, 1)
                 .set(packetPlayOutScoreboardTeam, 1);
         Reflection.FieldAccessor<Collection> collectionFieldAccessor = Reflection.getField(
-                packetPlayOutScoreboardTeam.getClass(), "g", Collection.class);
+                packetPlayOutScoreboardTeam.getClass(), Collection.class, 0);
         collectionFieldAccessor.set(packetPlayOutScoreboardTeam, Collections.singletonList(name));
 
         return packetPlayOutScoreboardTeam;
@@ -38,9 +38,9 @@ public class PacketPlayOutScoreboardTeamWrapper {
     public PacketPlayOutScoreboardTeam createUnregisterTeam(String name) {
         PacketPlayOutScoreboardTeam packetPlayOutScoreboardTeam = new PacketPlayOutScoreboardTeam();
 
-        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), "h", int.class)
+        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), int.class, 0)
                 .set(packetPlayOutScoreboardTeam, 1);
-        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), "a", String.class)
+        Reflection.getField(packetPlayOutScoreboardTeam.getClass(), String.class, 0)
                 .set(packetPlayOutScoreboardTeam, name);
 
         return packetPlayOutScoreboardTeam;

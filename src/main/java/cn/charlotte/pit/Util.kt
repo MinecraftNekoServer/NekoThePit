@@ -15,7 +15,9 @@ fun Player.getPitProfile(): PlayerProfile {
 
 fun Player.releaseItem() {
     this.inventory.itemInHand?.let {
-        this.world.dropItemNaturally(this.location, it)
+        if (it.type != org.bukkit.Material.AIR) {
+            this.world.dropItemNaturally(this.location, it)
+        }
         this.inventory.setItemInHand(null)
     }
 }

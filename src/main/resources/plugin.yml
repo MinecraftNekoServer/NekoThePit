@@ -12,7 +12,7 @@ softdepend: [ WorldEdit, FastAsyncWorldEdit, PlayerPoints, LuckPerms ]
 commands:
   pit:
     description: NekoThePit主命令
-    usage: /<command> [option|view|events|show|tradeLimits|trade|respawn|spawn|home|back|iKnowIGotWiped|killRecap|cdk|viewOffer|offer|AuctionGui|cool|openKingsQuestUI|openBakeMaster]
+    usage: /<command> [option|view|events|show|tradeLimits|trade|respawn|spawn|home|back|iKnowIGotWiped|killRecap|cdk|viewOffer|offer|AuctionGui|cool|openKingsQuestUI|openBakeMaster|mail|perk|shop|quest|prestige|demon|leaderboard|stats|angel]
   pitadmin:
     description: NekoThePit管理员命令
     usage: /<command> [setupPunchY|gacha|giveGacha|gachaPreview|checkGacha|checkMaxHealth|setGacha|setLocCurrency|give|addSpawn|loc|hologramLoc|keeperLoc|mail|genesisDemonLoc|genesisAngelLoc|changeItemInHand|shopNpc|perkNpc|LeaderNpc|prestigeNpc|debug|statusNpc|change|edit|openMenu|mythicHologram|chestHologram|leaderHologram|helperHolo|kaboom|pitLoc|event|setkothloc|giveSupporter|takeSupporter|drop|testSound|quest|reloadnpc|table|ench|setegg|pi|pr|reboot|forceTrade|wipe|unwipe|debug medal|trade|rollback|ham|spire floor|ham clear|spire spawn|forceSpawn|deleteFile|disablePlugin|refreshEvents|addAngelSpawns|addDemonSpawns|addPackagePoint|addSewersPoint|debugItem|enchantrecords|addSquadsLoc|addbhLoc|clearrecords|resetKingsQuests|reload|internal|auction|rename]

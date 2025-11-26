@@ -24,7 +24,7 @@ public class GenesisDemonNpc extends SkinNPC {
     @Override
     public List<String> getNpcDisplayName(Player player) {
         List<String> lines = new ArrayList<>();
-        lines.add("&e限时活动: 光暗派系");
+        lines.add("&e新活动: 光暗派系");
         lines.add("&c&l恶魔");
         lines.add("&e&l右键查看");
         return lines;

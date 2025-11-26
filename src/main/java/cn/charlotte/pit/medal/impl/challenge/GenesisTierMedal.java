@@ -20,7 +20,7 @@ public class GenesisTierMedal extends AbstractMedal {
 
     @Override
     public String getRequirementDescription(int level) {
-        return "在限时活动[光暗派系]中，累计提升2次第VII阶段里程碑加成";
+        return "在新活动[光暗派系]中，累计提升2次第VII阶段里程碑加成";
     }
 
     @Override

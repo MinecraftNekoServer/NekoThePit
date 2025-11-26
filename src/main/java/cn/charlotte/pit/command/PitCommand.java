@@ -62,14 +62,98 @@ public class PitCommand {
     private final Map<UUID, Cooldown> COOLDOWN_SHOW = new HashMap<>();
 
     @Command(
-            names = {
-                    "option",
-                    "options",
-                    "opt",
-                    "setting",
-                    "settings"
-            }
+            names = "pit"
     )
+    public void pitMainCommand(Player player, @Parameter(name = "subcommand", defaultValue = "help") String subcommand) {
+        switch (subcommand.toLowerCase()) {
+            case "option":
+            case "options":
+            case "opt":
+            case "setting":
+            case "settings":
+                openOption(player);
+                break;
+            case "view":
+                player.sendMessage(CC.translate("&c用法: /pit view <玩家名>"));
+                break;
+            case "events":
+                previewEvents(player);
+                break;
+            case "show":
+                show(player);
+                break;
+            case "tradeLimits":
+                sendTradeLimits(player);
+                break;
+            case "trade":
+                player.sendMessage(CC.translate("&c用法: /pit trade <玩家名>"));
+                break;
+            case "spawn":
+            case "respawn":
+            case "home":
+            case "back":
+                onSpawn(player);
+                break;
+            case "iKnowIGotWiped":
+                onKnow(player);
+                break;
+            case "killRecap":
+                onCheckKillRecap(player);
+                break;
+            case "cdk":
+                player.sendMessage(CC.translate("&c用法: /pit cdk <CDK码>"));
+                break;
+            case "viewOffer":
+                player.sendMessage(CC.translate("&c用法: /pit viewOffer <玩家名>"));
+                break;
+            case "offer":
+                player.sendMessage(CC.translate("&c用法: /pit offer <玩家名> <价格>"));
+                break;
+            case "auctiongui":
+                openAuctionGui(player);
+                break;
+            case "cool":
+                onCoolCommand(player);
+                break;
+            case "openkingsquestui":
+                handleOpenKingQuestUI(player);
+                break;
+            case "openbakemaster":
+                handleOpenBake(player);
+                break;
+            case "mail":
+                openMailMenu(player);
+                break;
+            case "perk":
+                openPerkMenu(player);
+                break;
+            case "shop":
+                openShopMenu(player);
+                break;
+            case "quest":
+                openQuestMenu(player);
+                break;
+            case "prestige":
+                openPrestigeMenu(player);
+                break;
+            case "demon":
+                openDemonMenu(player);
+                break;
+            case "leaderboard":
+                openLeaderboardMenu(player);
+                break;
+            case "stats":
+                openStatsMenu(player);
+                break;
+            case "angel":
+                openAngelMenu(player);
+                break;
+            default:
+                player.sendMessage(CC.translate("&c未知的子命令。使用 /pit help 查看帮助。"));
+                break;
+        }
+    }
+
     public void openOption(Player player) {
         PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
         if (profile.getPrestige() > 0 || profile.getLevel() >= 5) {

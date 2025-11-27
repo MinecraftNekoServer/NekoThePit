@@ -1413,13 +1413,6 @@ public class PlayerProfile {
     }
 
     public void setInArena(boolean inArena) {
-        if (inArena && !this.inArena) {
-            final Player player = Bukkit.getPlayer(getPlayerUuid());
-            if (player != null) {
-                UtilKt.releaseItem(player);
-            }
-        }
-
         this.inArena = inArena;
     }
 

@@ -1,0 +1,298 @@
+name: NekoThePitPremium
+version: 3.93
+description: A Bukkit mini-game plugin.
+authors: [ EmptyIron,Araykal ]
+
+api-version: 1.8
+main: cn.charlotte.pit.ThePit
+load: POSTWORLD
+depend: [ ProtocolLib ]
+softdepend: [ WorldEdit, FastAsyncWorldEdit, PlayerPoints, LuckPerms ]
+
+commands:
+  pit:
+    description: NekoThePit主命令
+    usage: /<command> [option|view|events|show|tradeLimits|trade|respawn|spawn|home|back|iKnowIGotWiped|killRecap|cdk|viewOffer|offer|AuctionGui|cool|openKingsQuestUI|openBakeMaster|mail|perk|shop|quest|prestige|demon|leaderboard|stats|angel]
+  pitadmin:
+    description: NekoThePit管理员命令
+    usage: /<command> [setupPunchY|gacha|giveGacha|gachaPreview|checkGacha|checkMaxHealth|setGacha|setLocCurrency|give|addSpawn|loc|hologramLoc|keeperLoc|mail|genesisDemonLoc|genesisAngelLoc|changeItemInHand|shopNpc|perkNpc|LeaderNpc|prestigeNpc|debug|statusNpc|change|edit|openMenu|mythicHologram|chestHologram|leaderHologram|helperHolo|kaboom|pitLoc|event|setkothloc|giveSupporter|takeSupporter|drop|testSound|quest|reloadnpc|table|ench|setegg|pi|pr|reboot|forceTrade|wipe|unwipe|debug medal|trade|rollback|ham|spire floor|ham clear|spire spawn|forceSpawn|deleteFile|disablePlugin|refreshEvents|addAngelSpawns|addDemonSpawns|addPackagePoint|addSewersPoint|debugItem|enchantrecords|addSquadsLoc|addbhLoc|clearrecords|resetKingsQuests|reload|internal|auction|rename]
+  option:
+    description: 打开选项菜单
+    usage: /<command>
+    aliases: [options, opt, setting, settings]
+  view:
+    description: 查看玩家档案
+    usage: /<command> <玩家名>
+  events:
+    description: 预览事件
+    usage: /<command>
+  show:
+    description: 展示物品
+    usage: /<command>
+  tradeLimits:
+    description: 显示交易限制
+    usage: /<command>
+  trade:
+    description: 交易命令
+    usage: /<command> [玩家名]
+  respawn:
+    description: 传送回出生点
+    usage: /<command>
+    aliases: [spawn, home, back]
+  iKnowIGotWiped:
+    description: 确认被清档
+    usage: /<command>
+  killRecap:
+    description: 查看死亡回放
+    usage: /<command>
+  cdk:
+    description: 使用CDK兑换码
+    usage: /<command> <CDK码>
+  viewOffer:
+    description: 查看交易报价
+    usage: /<command> <玩家名>
+  offer:
+    description: 发起交易报价
+    usage: /<command> <玩家名> <价格>
+  AuctionGui:
+    description: 打开拍卖行界面
+    usage: /<command>
+  cool:
+    description: 显示在线精通玩家
+    usage: /<command>
+  openKingsQuestUI:
+    description: 打开国王任务界面
+    usage: /<command>
+  openBakeMaster:
+    description: 打开烘焙大师界面
+    usage: /<command>
+  mail:
+    description: 打开邮件菜单
+    usage: /<command>
+  perk:
+    description: 打开天赋菜单
+    usage: /<command>
+  shop:
+    description: 打开商店菜单
+    usage: /<command>
+  quest:
+    description: 打开任务菜单
+    usage: /<command>
+  prestige:
+    description: 打开精通菜单（120级或精通后解锁）
+    usage: /<command>
+  demon:
+    description: 打开恶魔阵营菜单
+    usage: /<command>
+  leaderboard:
+    description: 打开排行榜助手菜单
+    usage: /<command>
+  stats:
+    description: 打开统计信息菜单（50级或精通后解锁）
+    usage: /<command>
+  angel:
+    description: 打开天使阵营菜单
+    usage: /<command>
+  gacha:
+    description: 抽奖命令
+    usage: /<command>
+  setupPunchY:
+    description: 设置Punch Y值
+    usage: /<command> <punchY>
+  giveGacha:
+    description: 给予抽奖券
+    usage: /<command> <玩家名> <数量>
+  checkGacha:
+    description: 查看抽奖券
+    usage: /<command> <玩家名>
+  setGacha:
+    description: 设置抽奖券数量
+    usage: /<command> <玩家名> <数量>
+  gachaPreview:
+    description: 预览抽奖内容
+    usage: /<command>
+  checkMaxHealth:
+    description: 检查最大血量
+    usage: /<command> <玩家>
+  setLocCurrency:
+    description: 设置位置
+    usage: /<command> <字段>
+  give:
+    description: 给予物品
+    usage: /<command> [玩家名]
+    aliases: [pitAdmin giveItemInHand]
+  addSpawn:
+    description: 添加出生点
+    usage: /<command>
+  loc:
+    description: 获取当前位置
+    usage: /<command>
+  hologramLoc:
+    description: 设置全息图位置
+    usage: /<command>
+  keeperLoc:
+    description: 设置退出NPC位置
+    usage: /<command>
+  mail:
+    description: 设置邮件NPC位置
+    usage: /<command>
+  genesisDemonLoc:
+    description: 设置恶魔阵营NPC位置
+    usage: /<command>
+  genesisAngelLoc:
+    description: 设置天使阵营NPC位置
+    usage: /<command>
+  changeItemInHand:
+    description: 修改手持物品属性
+    usage: /<command> [lives|maxlive|tier] <数量>
+  shopNpc:
+    description: 设置商店NPC位置
+    usage: /<command>
+  perkNpc:
+    description: 设置天赋NPC位置
+    usage: /<command>
+  LeaderNpc:
+    description: 设置排行榜NPC位置
+    usage: /<command>
+  prestigeNpc:
+    description: 设置精通NPC位置
+    usage: /<command>
+  statusNpc:
+    description: 设置状态NPC位置
+    usage: /<command>
+  debug:
+    description: 调试命令
+    usage: /<command> <value>
+  change:
+    description: 修改玩家数据
+    usage: /<command> [玩家名] [类型] [数值]
+  edit:
+    description: 切换编辑模式
+    usage: /<command>
+    aliases: [pitadmin edit]
+  openMenu:
+    description: 打开菜单
+    usage: /<command> <菜单类型>
+  mythicHologram:
+    description: 设置神话全息图位置
+    usage: /<command>
+  chestHologram:
+    description: 设置箱子全息图位置
+    usage: /<command>
+  leaderHologram:
+    description: 设置排行榜全息图位置
+    usage: /<command>
+  helperHolo:
+    description: 设置帮助全息图位置
+    usage: /<command>
+  kaboom:
+    description: 爆炸效果命令
+    usage: /<command>
+  pitLoc:
+    description: 设置天坑位置
+    usage: /<command> <A或B>
+  event:
+    description: 开启事件
+    usage: /<command> <事件名>
+  setkothloc:
+    description: 设置占山为王位置
+    usage: /<command>
+  giveSupporter:
+    description: 给予会员权限
+    usage: /<command> [玩家名]
+  takeSupporter:
+    description: 移除会员权限
+    usage: /<command> [玩家名]
+  drop:
+    description: 删除数据库
+    usage: /<command>
+  testSound:
+    description: 测试音效
+    usage: /<command> [音效名]
+  quest:
+    description: 设置任务NPC位置
+    usage: /<command>
+  reloadnpc:
+    description: 重载NPC
+    usage: /<command>
+  table:
+    description: 设置附魔台位置
+    usage: /<command>
+  ench:
+    description: 打开附魔菜单
+    usage: /<command>
+  setegg:
+    description: 设置蛋位置
+    usage: /<command>
+  pi:
+    description: 打开物品菜单
+    usage: /<command>
+  pr:
+    description: 打开符文物品菜单
+    usage: /<command>
+  reboot:
+    description: 重启服务器
+    usage: /<command> [持续时间] [原因]
+  forceTrade:
+    description: 强制交易
+    usage: /<command> <玩家名>
+  wipe:
+    description: 清档命令
+    usage: /<command> <玩家名> <原因>
+  unwipe:
+    description: 取消清档
+    usage: /<command> <玩家名>
+  rollback:
+    description: 回滚背包
+    usage: /<command> <玩家名>
+  ham:
+    description: 汉堡NPC位置
+    usage: /<command> <参数>
+  spire:
+    description: 尖塔位置
+    usage: /<command> <参数>
+  forceSpawn:
+    description: 强制传送至出生点
+    usage: /<command> [玩家名]
+  disablePlugin:
+    description: 禁用插件
+    usage: /<command> <插件名>
+  refreshEvents:
+    description: 刷新事件
+    usage: /<command>
+  addAngelSpawns:
+    description: 添加天使出生点
+    usage: /<command>
+  addDemonSpawns:
+    description: 添加恶魔出生点
+    usage: /<command>
+  addPackagePoint:
+    description: 添加包裹点
+    usage: /<command>
+  addSewersPoint:
+    description: 添加下水道点
+    usage: /<command>
+  enchantrecords:
+    description: 检查附魔记录
+    usage: /<command>
+  addSquadsLoc:
+    description: 添加小队位置
+    usage: /<command>
+  addbhLoc:
+    description: 添加BlockHead位置
+    usage: /<command>
+  clearrecords:
+    description: 清除记录
+    usage: /<command>
+  resetKingsQuests:
+    description: 重置国王任务
+    usage: /<command>
+  reload:
+    description: 重载配置
+    usage: /<command>
+  auction:
+    description: 拍卖命令
+    usage: /<command> <价格>
+  rename:
+    description: 重命名物品
+    usage: /<command> <新名称>

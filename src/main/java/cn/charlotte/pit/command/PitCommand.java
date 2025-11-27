@@ -413,9 +413,16 @@ public class PitCommand {
                     profile.setStreakKills(0);
                     profile.setInArena(false);
 
+                    // 播放 wither shoot 音效
+                    player.playSound(player.getLocation(), "entity.wither.shoot", 1.0f, 1.0f);
+
                     new PitPlayerSpawnEvent(player).callEvent();
 
                     PlayerUtil.clearPlayer(player, true, false);
+                }
+            }
+        }, 1);
+    }
                 }
             }
         }, 1);

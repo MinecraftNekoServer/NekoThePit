@@ -195,6 +195,16 @@ public class ProtectListener implements Listener {
 
     @EventHandler
     public void onSpawn(EntitySpawnEvent event) {
+        // 阻止所有非物品和非箭矢的实体自然生成（包括怪物和动物）
+        if (!(event.getEntity() instanceof Item) && !(event.getEntity() instanceof Arrow)) {
+            // 允许一些必要的实体生成，如玩家（虽然玩家不会通过这个事件生成）
+            if (event.getEntity() instanceof LivingEntity && !(event.getEntity() instanceof Player)) {
+                // 取消所有非玩家生物的生成
+                event.setCancelled(true);
+                return;
+            }
+        }
+        
         if (event.getEntity() instanceof Item || event.getEntity() instanceof Arrow) {
             DroppedEntityData data = new DroppedEntityData();
             data.setTimer(new Cooldown(30, TimeUnit.SECONDS));
@@ -204,6 +214,12 @@ public class ProtectListener implements Listener {
                     .getEntityData()
                     .add(data);
         }
+    }
+    
+    @EventHandler
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        // 阻止所有生物的自然生成
+        event.setCancelled(true);
     }
 
     @EventHandler

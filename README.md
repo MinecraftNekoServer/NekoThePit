@@ -2,6 +2,34 @@
 
 这是一个Minecraft天坑乱斗（The Pit）模式的Bukkit插件，提供了丰富的游戏功能和系统。
 
+# 注意事项！
+
+> 注意：Java 9 及以上需要添加 JVM 参数，保证访问内部包，否则可能报错。
+
+## 必须添加
+```bash
+--add-opens=java.base/java.net=ALL-UNNAMED
+````
+
+## 启动示例
+
+```bash
+# Windows / Linux 通用
+java --add-opens=java.base/java.net=ALL-UNNAMED -Xms2G -Xmx2G -jar paper-1.12.2.jar
+```
+
+## 说明
+
+* `--add-opens=java.base/java.net=ALL-UNNAMED`
+  允许 JVM 模块访问 `java.net` 内部类，解决 Java 9+ 的访问限制问题
+* `-Xms2G`：初始内存 2GB
+* `-Xmx2G`：最大内存 2GB
+
+## 注意
+
+* Java 8 启动不需要 `--add-opens` 参数
+* 推荐至少使用 Java 17 或以上，保证安全性和性能
+
 ## 命令列表
 
 ### 普通玩家命令
